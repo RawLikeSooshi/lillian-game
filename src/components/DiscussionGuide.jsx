@@ -1,6 +1,7 @@
 import { useState } from "react";
 
-function generateDiscussionQuestions(flags, stats) {
+function generateDiscussionQuestions(flags, stats, chapter) {
+  if (chapter === 3) return generateCh3Questions(flags);
   const questions = [];
 
   // Q1: Market scene — did the player act before understanding, or wait?
@@ -26,9 +27,25 @@ function generateDiscussionQuestions(flags, stats) {
   return questions.slice(0, 3);
 }
 
-export default function DiscussionGuide({ flags, stats }) {
+function generateCh3Questions(flags) {
+  const questions = [];
+
+  if (flags.messengerPath_chosen) {
+    questions.push("You chose the messenger's path over the arena. What drew you to it? Would you choose differently now?");
+  } else if (flags.arenaPath_chosen) {
+    questions.push("You chose the arena over the messenger. What made that feel like the right call?");
+  }
+
+  questions.push("What did you think of Niko? Did you trust them? Why or why not?");
+
+  questions.push("Did anything in this chapter surprise you? Was there a moment where the outcome wasn't what you expected?");
+
+  return questions.slice(0, 3);
+}
+
+export default function DiscussionGuide({ flags, stats, chapter }) {
   const [open, setOpen] = useState(false);
-  const questions = generateDiscussionQuestions(flags, stats);
+  const questions = generateDiscussionQuestions(flags, stats, chapter);
 
   return (
     <div style={{ marginTop: 18 }}>

@@ -1,9 +1,10 @@
 import StatBar from "../components/StatBar";
 import OracleInsight from "../components/OracleInsight";
+import InventoryBar from "../components/InventoryBar";
 import { STAT_ICONS } from "../engine/stats";
 import { bg, card, goldBtn } from "../styles";
 
-export default function ResultScreen({ heroName, scene, stats, lastChanges, choice, showLesson, onNext, isLastScene, chapter }) {
+export default function ResultScreen({ heroName, scene, stats, inventory, lastChanges, choice, showLesson, onNext, isLastScene, chapter, inventoryGained }) {
   return (
     <div style={bg}>
       <div style={{ ...card, marginBottom: 10, padding: "11px 16px" }}>
@@ -11,6 +12,7 @@ export default function ResultScreen({ heroName, scene, stats, lastChanges, choi
           <span style={{ color: "#d4a017", fontSize: 12, fontVariant: "small-caps" }}>⚡ {heroName}</span>
           <span style={{ color: "#4caf8a", fontSize: 10 }}>✦ Stats Updated</span>
         </div>
+        {inventory && inventory.length > 0 && <InventoryBar inventory={inventory} />}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
           {Object.entries(stats).map(([n, v]) => <StatBar key={n} name={n} value={v} change={lastChanges[n] || 0} />)}
         </div>
@@ -28,7 +30,7 @@ export default function ResultScreen({ heroName, scene, stats, lastChanges, choi
             textAlign: "center",
           }}>
             <p style={{ fontSize: 12, color: "#d4a017", margin: 0, fontStyle: "italic" }}>
-              This was the harder path. The Oracle is watching.
+              {chapter >= 3 ? "The road is harder now. The Oracle is still watching." : "This was the harder path. The Oracle is watching."}
             </p>
           </div>
         )}
@@ -50,6 +52,22 @@ export default function ResultScreen({ heroName, scene, stats, lastChanges, choi
             </span>
           ))}
         </div>
+        {inventoryGained && inventoryGained.length > 0 && (
+          <div style={{
+            background: "rgba(212,160,23,0.08)",
+            border: "1px solid rgba(212,160,23,0.25)",
+            borderRadius: 8,
+            padding: "8px 12px",
+            marginBottom: 10,
+            textAlign: "center",
+          }}>
+            {inventoryGained.map(item => (
+              <span key={item.id} style={{ fontSize: 12, color: "#d4a017" }}>
+                {item.icon} Acquired: {item.name}
+              </span>
+            ))}
+          </div>
+        )}
         {showLesson && <OracleInsight lesson={choice.lesson} />}
         {showLesson && (
           <button onClick={onNext} style={{ ...goldBtn, width: "100%" }}>

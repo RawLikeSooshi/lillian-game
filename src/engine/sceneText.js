@@ -13,6 +13,16 @@ export const resolveSceneText = (scene, flags, figure) => {
     resolved.atmosphere = resolveVariant(scene.atmosphereVariants, flags);
   }
 
+  if (scene.transitionText) {
+    resolved.transitionText = scene.transitionText;
+  }
+  if (scene.transitionTextVariants) {
+    resolved.transitionText = resolveVariant(scene.transitionTextVariants, flags);
+  }
+  if (scene.transitionTextTemplate) {
+    resolved.transitionText = interpolateTemplate(scene.transitionTextTemplate, figure);
+  }
+
   return resolved;
 };
 

@@ -8,7 +8,7 @@
 
 **Hero of Olympus** is an educational narrative RPG web app designed for a 9-year-old player. Set in ancient Greece, the player creates a hero, makes branching story choices across scenes, and watches five character stats evolve based on those decisions. After each choice, the game explains *why* the stats changed — that's the core educational mechanic. At chapter end the player receives a personalized "Hero Portrait" based on their top two stats.
 
-**Current scope:** Chapter I (3 scenes) + Chapter II (5 scenes). Stats and flags carry between chapters.
+**Current scope:** Chapter I (3 scenes + 2 puzzles) + Chapter II (5 scenes + 2 puzzles) + Chapter III (5 scenes + quest fork + 2-3 puzzles). Stats, flags, and inventory carry between chapters.
 
 ---
 
@@ -29,38 +29,58 @@
 ### 3.1 App Structure
 `src/App.jsx` is the **orchestrator** — it holds all game state and routes phases to screen components. No rendering logic lives in App.jsx itself; it delegates to screen components.
 
-### 3.2 Phase Flow (State Machine)
-```
-welcome → name → [Ch1: scene↔result ×3] → end(ch1)
-                                              ↓
-                  "Continue to Ch2" → [Ch2: scene↔result ×5] → end(ch2)
+### 3.2 Step-Based Flow System
+Each chapter exports a `getFlow(flags, inventory, forkChoice)` function returning an array of typed steps. `App.jsx` walks this array with `stepIndex` and determines the phase based on step type.
 
-From any "end": "Play Again" → welcome (full reset)
+**Step types:** `scene`, `puzzle`, `questFork`
+
+**Flow functions:** `getChapter1Flow`, `getChapter2Flow`, `getChapter3Flow` (in `src/data/chapter*Flow.js`)
+
+Conditional steps use `isStepAccessible(step, flags, inventory)` for filtering (e.g. puzzle only appears if player has a specific item).
+
+### 3.3 Phase Flow (State Machine)
+```
+welcome → name → [Ch1: scenes + puzzles] → end(ch1)
+  → "Continue" → [Ch2: scenes + puzzles] → end(ch2)
+  → "Continue" → [Ch3: scene → fork → path scenes/puzzles → convergence] → end(ch3)
+  → "Play Again" → welcome (full reset)
 ```
 
-**Phases:**
+**Phases (11 total):**
 | Phase | Screen Component | What renders |
 |-------|-----------------|-------------|
 | `welcome` | WelcomeScreen | Title, stat explanations, "Begin" button |
 | `name` | NameScreen | Hero name input |
-| `scene` | SceneScreen | Scene narrative + 4 choice buttons |
-| `result` | ResultScreen | Feedback, stat changes (animated), Oracle's Insight, amber banner |
-| `end` | ChapterEndScreen | Hero Portrait, stats, figure reveal (Ch2), discussion guide (Ch2) |
+| `transition` | TransitionScreen | Travel-beat narrative before a scene |
+| `scene` | SceneScreen | Scene narrative + choice buttons + InventoryBar |
+| `result` | ResultScreen | Feedback, stat changes, Oracle's Insight, amber banner, inventory gains |
+| `puzzle` | PuzzleScreen | Puzzle with progressive hints, answer options, skip |
+| `askParent` | AskParentScreen | Tier 2 parent consultation (cream card) |
+| `puzzleResult` | PuzzleResultScreen | Solve/skip outcome with stat badges |
+| `questFork` | QuestForkScreen | Side-by-side path selection |
+| `questForkConfirm` | QuestForkConfirmScreen | "Are you sure?" confirmation |
+| `end` | ChapterEndScreen | Hero Portrait, stats, prophecy (Ch3), discussion guide |
 
-### 3.3 State Variables
+### 3.4 State Variables
 | State | Type | Purpose |
 |-------|------|---------|
-| `phase` | string | Current game phase |
+| `phase` | string | Current game phase (11 possible values) |
 | `heroName` | string | Player's chosen hero name |
 | `nameInput` | string | Controlled input for name field |
-| `chapter` | number | Current chapter (1 or 2) |
-| `sceneIndex` | number | Index into current chapter's scene array (resets per chapter) |
-| `stats` | object | `{ Courage, Wisdom, Discipline, Empathy, Cunning }` — **never reset between chapters** |
-| `flags` | object | 10 boolean flags — **never reset between chapters** |
-| `lastChanges` | object | Stat deltas from the most recent choice (for animation) |
+| `chapter` | number | Current chapter (1, 2, or 3) |
+| `stepIndex` | number | Index into current chapter's flow array |
+| `stats` | object | `{ Courage, Wisdom, Discipline, Empathy, Cunning }` — **never reset** |
+| `flags` | object | 35+ boolean flags — **never reset** |
+| `inventory` | Item[] | Up to 6 items — **never reset** |
+| `forkChoice` | string/null | Quest fork selection (`"messengerPath"` or `"arenaPath"`) |
+| `puzzleState` | object | `{ hintsUsed, selectedAnswer, solved, skipped }` |
+| `pendingForkChoice` | string/null | Fork selection awaiting confirmation |
+| `lastChanges` | object | Stat deltas from the most recent choice |
 | `choice` | object | The resolved choice object (for result screen) |
 | `showLesson` | boolean | Whether the Oracle's Insight has faded in (700ms delay) |
-| `ch1EndStats` | object/null | Snapshot of stats when Ch1 ends (for Ch2 comparison) |
+| `ch1EndStats` | object/null | Snapshot of stats when Ch1 ends |
+| `ch2EndStats` | object/null | Snapshot of stats when Ch2 ends |
+| `inventoryGained` | Item[] | Items just gained (for result screen feedback) |
 
 ---
 
@@ -108,22 +128,43 @@ Scenes are arrays of objects. Each scene supports three text modes:
 ```
 
 ### 4.3 Flag System (`src/engine/flags.js`)
-Boolean flags set by choices, persisted across chapters.
+Boolean flags set by choices and puzzle outcomes, persisted across chapters. 35+ flags total.
 
-| Flag | Set by |
-|------|--------|
-| `helpedOldWoman` | Ch1 Scene 1 choices A, B |
-| `tookDirectAction` | Ch1 Scene 1 choice A |
-| `studiedBeforeActing` | Ch1 Scene 1 choice B |
-| `tookForestPath` | Ch1 Scene 2 choices A, C, D |
-| `spokeAgainstLycon` | Ch1 Scene 3 choice A |
-| `reportedLyconQuietly` | Ch1 Scene 3 choice B |
-| `understoodLycon` | Ch1 Scene 3 choice C |
-| `stayedSilentAtTemple` | Ch1 Scene 3 choice D |
-| `liedToLyconsAgent` | Ch2 Scene 5 choice B |
-| `namedSomeoneToAgent` | Ch2 Scene 5 choice B |
+**Ch1 scene flags:** `helpedOldWoman`, `tookDirectAction`, `studiedBeforeActing`, `tookForestPath`, `spokeAgainstLycon`, `reportedLyconQuietly`, `understoodLycon`, `stayedSilentAtTemple`, `actedPublicly_ch1`
+
+**Ch2 scene flags:** `liedToLyconsAgent`, `namedSomeoneToAgent`
+
+**Puzzle flags:** `solvedSphinxRiddle`/`skippedSphinxRiddle`, `solvedOracleDoor`/`skippedOracleDoor`, `solvedFigureTest`/`skippedFigureTest`, `solvedSphinxPapyrus`/`skippedSphinxPapyrus`, `solvedMessengerPuzzle`/`skippedMessengerPuzzle`, `solvedArenaPuzzle`/`skippedArenaPuzzle`, `solvedSphinxFinal`/`skippedSphinxFinal`
+
+**Quest fork flags:** `messengerPath_chosen`, `arenaPath_chosen`, `messengerPath_notTaken`, `arenaPath_notTaken`
+
+**Ch3 scene flags:** `madeAllyOfNiko`, `toldNikoEverything`, `approachedDirectly`, `researchedFirst`, `usedNikoAsScout`, `wentToAuthorities`, and many more
 
 `applyFlags(currentFlags, setsFlags)` merges new flags into state.
+
+### 4.3b Inventory System (`src/engine/inventory.js` + `src/data/items.js`)
+- **6 items max** (`MAX_INVENTORY = 6`)
+- Items are gained via `setsInventory` on choices or puzzle rewards
+- Items can gate choices via `requiresItem` and be consumed via `consumesItem`
+- Items can gate puzzles via `condition: { item: "itemId" }` on flow steps
+- `ALL_ITEMS` catalog defines 6 items: woolenThread, sphinxPapyrus, templeCoin, figureToken, nikosBracelet, oracleFeather
+- `InventoryBar` component displays items as horizontal icon row with tooltips
+
+### 4.3c Puzzle System (`src/engine/puzzleEngine.js`)
+- **Tier 1 (solo):** Player solves alone with progressive hints
+- **Tier 2 (collaborative):** Includes "Ask a Parent" button that opens a cream-card screen
+- **3 hints per puzzle**, with optional stat costs (first hint free)
+- **Skip always available** — no penalty beyond different stat outcome
+- `correctIndex: -1` means all answers are valid (philosophical questions)
+- Puzzles have `onSolve`/`onSkip` stat changes, `solveFlag`/`skipFlag`, solve/skip messages
+- Puzzle data in `chapter*Puzzles.js` files
+
+### 4.3d Quest Fork System
+- **Ch3 only** — "Two Things Need Doing" fork with messengerPath and arenaPath
+- Side-by-side path cards with icons, descriptions, stat bias hints
+- Confirmation screen before locking in choice
+- Unchosen path permanently flagged (`*_notTaken`)
+- Fork triggers flow recomputation via `useMemo` — fork step replaced by path-specific steps at same index
 
 ### 4.4 Scene Text Resolution (`src/engine/sceneText.js`)
 - `resolveSceneText(scene, flags, figure)` — resolves `textVariants`/`textTemplate`/`atmosphereVariants` to plain strings
@@ -245,26 +286,44 @@ lillian-game/
 ├── vite.config.js
 └── src/
     ├── main.jsx
-    ├── App.jsx                    # Orchestrator (state + phase routing)
-    ├── styles.js                  # Shared inline styles (bg, card, goldBtn)
+    ├── App.jsx                    # Orchestrator (state + step-based flow + phase routing)
+    ├── styles.js                  # Shared inline styles (bg, card, goldBtn, puzzleCard, etc.)
     ├── engine/
     │   ├── stats.js               # Stats, heroIdentity, getMythFigure
-    │   ├── flags.js               # Flags, applyFlags
-    │   └── sceneText.js           # Text resolution (variants, templates)
+    │   ├── flags.js               # 35+ flags, applyFlags
+    │   ├── sceneText.js           # Text resolution (variants, templates, transitionText)
+    │   ├── inventory.js           # addItem, removeItem, hasItem, applyInventoryChanges
+    │   ├── flow.js                # STEP_TYPES, scene counting, isStepAccessible
+    │   └── puzzleEngine.js        # Puzzle state, hint/answer/skip logic
     ├── data/
+    │   ├── items.js               # ALL_ITEMS catalog, INITIAL_INVENTORY
     │   ├── chapter1.js            # 3 scenes
-    │   └── chapter2.js            # 5 scenes
+    │   ├── chapter1Puzzles.js     # 2 puzzles
+    │   ├── chapter1Flow.js        # getChapter1Flow()
+    │   ├── chapter2.js            # 5 scenes
+    │   ├── chapter2Puzzles.js     # 2 puzzles
+    │   ├── chapter2Flow.js        # getChapter2Flow()
+    │   ├── chapter3.js            # 5 scenes + quest fork
+    │   ├── chapter3Puzzles.js     # 3 puzzles
+    │   └── chapter3Flow.js        # getChapter3Flow() with branching
     ├── components/
     │   ├── StatBar.jsx
-    │   ├── ChoiceButton.jsx
+    │   ├── ChoiceButton.jsx       # With requiresItem/Flag gating
     │   ├── OracleInsight.jsx
-    │   └── DiscussionGuide.jsx
+    │   ├── InventoryBar.jsx       # Horizontal item display (6 slots)
+    │   └── DiscussionGuide.jsx    # Ch2/Ch3 questions
     └── screens/
         ├── WelcomeScreen.jsx
         ├── NameScreen.jsx
-        ├── SceneScreen.jsx
-        ├── ResultScreen.jsx
-        └── ChapterEndScreen.jsx
+        ├── SceneScreen.jsx        # With InventoryBar + inventory beats
+        ├── ResultScreen.jsx       # With inventory gain feedback
+        ├── ChapterEndScreen.jsx   # Ch1/2/3 end (prophecy, stats timeline)
+        ├── TransitionScreen.jsx   # Travel-beat screens
+        ├── PuzzleScreen.jsx       # Puzzles with hints
+        ├── AskParentScreen.jsx    # Tier 2 parent pause
+        ├── PuzzleResultScreen.jsx # Solve/skip outcomes
+        ├── QuestForkScreen.jsx    # Path selection
+        └── QuestForkConfirmScreen.jsx
 ```
 
 ---
@@ -298,12 +357,32 @@ Deliberately different — cream card (`#faf8f0` bg, `#3a3020` text, `#e0d8c0` b
 2. `crossroads` — "The Riddle at the Crossroads" — choose between two paths
 3. `temple` — "The Temple of Apollo" — confront a nobleman (Lycon) bribing a priest
 
-### Chapter II — The Road from Delphi (5 scenes)
+### Chapter II — The Road from Delphi (5 scenes + 2 puzzles)
 1. `ch2_market` — "The Market at Corinth" — a thief who steals to give (textVariants)
 2. `ch2_figure` — "The Figure at the Well" — meet the myth figure (textTemplate)
-3. `ch2_dilemma` — "The Question With No Clean Answer" — the soldier's dilemma (textTemplate)
-4. `ch2_agents` — "The Consequence" — Lycon's agents on the road (textVariants + atmosphereVariants + isRightChoiceHardOutcome)
-5. `ch2_offer` — "The Easy Way Out" — an agent offers a deal at an inn (setsFlags: liedToLyconsAgent)
+3. **Puzzle:** "The Figure's Test" (Tier 1) — moral reasoning, all answers valid
+4. `ch2_dilemma` — "The Question With No Clean Answer" — the soldier's dilemma (textTemplate)
+5. `ch2_agents` — "The Consequence" — Lycon's agents on the road (textVariants + atmosphereVariants + isRightChoiceHardOutcome)
+6. `ch2_offer` — "The Easy Way Out" — an agent offers a deal at an inn (setsFlags: liedToLyconsAgent)
+7. **Puzzle:** "The Sphinx's Papyrus Awakens" (Tier 2, conditional on sphinxPapyrus item)
+
+### Chapter III — The City of Corinth (5 scenes + quest fork + 2-3 puzzles)
+1. `ch3_arrival` — "The City, Finally" — meet Niko, choose to trust or not
+2. **Quest Fork:** "Two Things Need Doing" — messengerPath (Find Mira) vs arenaPath (Help Castor)
+
+**Messenger Path:**
+3a. `ch3_mira1` — "The Girl with the Package" — investigate Aldric's warehouse
+4a. **Puzzle:** "The Package Problem" (Tier 1) — logic elimination
+5a. `ch3_mira2` — "The Thing You Didn't Predict" — consequences of doing the right thing
+
+**Arena Path:**
+3b. `ch3_castor1` — "The Sabotage" — investigate stolen sandals
+4b. **Puzzle:** "Reading the Evidence" (Tier 1) — timeline reconstruction
+5b. `ch3_castor2` — "The Part You Didn't Plan For" — unintended consequences
+
+**Convergence:**
+6. **Puzzle:** "The Sphinx's Papyrus, Continued" (Tier 2, conditional on sphinxPapyrus item) — Two Guards problem
+7. `ch3_convergence` — "The Name You Made" — woman tests your consistency
 
 ---
 
@@ -345,12 +424,22 @@ npm run preview      # Preview production build
 | 2026-03-02 | Stats + flags never reset between chapters | Core design: choices compound, consequences carry forward |
 | 2026-03-02 | Discussion guide as cream card | Must feel "outside" the game — parent-facing, not player-facing |
 | 2026-03-02 | Shared styles.js | Avoids duplicating bg/card/goldBtn across 5 screen files |
+| 2026-03-02 | Step-based flow system | Chapters return typed step arrays (scene/puzzle/fork) instead of flat scene arrays |
+| 2026-03-02 | Inventory system (6 items max) | Items gained from choices/puzzles, gate other choices/puzzles, persist across chapters |
+| 2026-03-02 | Puzzle system (Tier 1 + Tier 2) | Progressive hints with stat costs, skip always available, Ask a Parent for Tier 2 |
+| 2026-03-02 | Quest fork system | Ch3 two-path branching with confirmation, flow recomputation via useMemo |
+| 2026-03-02 | Courage rebalancing | +2 for public courage, +1 for quiet courage, tracked via flags |
+| 2026-03-02 | Travel beats (transitionText) | Narrative transition screens shown before scenes |
+| 2026-03-02 | Ch3 prophecy end screen | Near-black card with prophecy text, 4-column stats timeline, inventory display |
+| 2026-03-02 | Conditional puzzles | Puzzles filtered by isStepAccessible based on flags/inventory |
 
 ---
 
 ## 12. Future Expansion
 
-- **Save system:** localStorage to persist stats/flags between sessions
-- **Chapter 3+:** Add `src/data/chapter3.js`, wire into App.jsx chapter routing
+- **Save system:** localStorage to persist stats/flags/inventory between sessions
+- **Chapter 4+:** Add `src/data/chapter4.js`, `chapter4Puzzles.js`, `chapter4Flow.js`, wire into App.jsx
 - **Longer arcs:** Mentor characters (myth figures) that persist across chapters
-- **More complex moral scenarios:** Building on the consequence system
+- **More complex moral scenarios:** Building on the consequence system and quest fork mechanic
+- **Item usage in scenes:** More `consumesItem` choices and `requiresItem` gating
+- **Sphinx quest line:** sphinxPapyrus items already seed a multi-chapter puzzle arc

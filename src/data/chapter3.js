@@ -1,0 +1,262 @@
+export const chapter3Scenes = {
+  cityArrival: {
+    id: "ch3_arrival",
+    title: "The City, Finally",
+    image: "\u{1F3D9}\uFE0F",
+    atmosphere: "Three days of road. Corinth rises ahead \u2014 white walls, noise, the smell of the sea.",
+    inventoryBeat: {
+      item: "woolenThread",
+      text: "You catch a glimpse of the red thread in your satchel. You still don't know what it means. But you've kept it.",
+    },
+    text: "You've been traveling long enough that your feet have stopped complaining.\n\nCorinth is the largest city you've ever seen. You stand at the gate for a moment just taking it in \u2014 the noise, the crowds, the way everyone seems to know exactly where they're going.\n\nA boy about your age is sitting on a stone post near the gate, watching arrivals with great seriousness. He looks at your satchel, then at your face. \"You came from the Oracle's road,\" he says. It isn't a question.\n\nHe hops off the post. \"You look like someone with a story,\" he says. \"And I know everyone in this city. I could be useful.\"",
+    choices: [
+      {
+        text: "Tell him a little \u2014 where you came from and what you're looking for.",
+        statChanges: { Empathy: 1, Wisdom: 1 },
+        setsFlags: { madeAllyOfNiko: true },
+        feedback: "His name is Niko. He talks fast and listens faster, which is unusual. By the time you've told half your story he's already told you three things about the city you needed to know. Something about him seems trustworthy \u2014 not because he's honest, but because he's genuinely curious.",
+        lesson: "Trust isn't just about someone's honesty \u2014 it's about their interest. People who are genuinely curious about the world tend to be more reliable than people who are just telling you what you want to hear.",
+        setsInventory: ["nikosBracelet"],
+      },
+      {
+        text: "Ask what he wants in exchange before you say anything.",
+        statChanges: { Cunning: 1, Wisdom: 1 },
+        setsFlags: { madeAllyOfNiko: true },
+        feedback: "'Fair,' he says, not offended at all. 'I want to hear what it's like out there. I've never left the city.' You trade stories for information. It's a good deal. His name is Niko.",
+        lesson: "Knowing the terms of a relationship before you're in it is wisdom. Most people get into arrangements without asking \u2014 and then resent them later.",
+        setsInventory: ["nikosBracelet"],
+      },
+      {
+        text: "Smile and keep walking. You don't need a guide.",
+        statChanges: { Discipline: 1 },
+        setsFlags: { madeAllyOfNiko: false },
+        feedback: "You find your own way to an inn. It takes two hours and three wrong turns. Later you see Niko guiding a merchant through the city in fifteen minutes. You could have used that time.",
+        lesson: "Self-sufficiency is a real strength. But knowing when to accept help \u2014 and from whom \u2014 is also a form of intelligence. Independence and isolation are not the same thing.",
+      },
+      {
+        text: "Tell him everything. You're tired of being cautious.",
+        statChanges: { Empathy: 2, Cunning: -1 },
+        setsFlags: { madeAllyOfNiko: true, toldNikoEverything: true },
+        feedback: "Niko listens with wide eyes. By evening, he's told at least four people the broad strokes of your story. You didn't ask him not to. He's not malicious \u2014 just enthusiastic. Your name is now in the city before you've decided what to do with it.",
+        lesson: "Openness is a virtue \u2014 but information travels. Telling someone everything assumes they'll treat your story the way you do. That's not always true, even when their intentions are good.",
+        setsInventory: ["nikosBracelet"],
+      },
+    ],
+  },
+
+  mira1: {
+    id: "ch3_mira1",
+    title: "The Girl with the Package",
+    image: "\u{1F50D}",
+    atmosphere: "The city at night. Narrower streets. Fewer people \u2014 but not none.",
+    text: "Niko, if you made an ally of him, offers to help without being asked. If not, you navigate alone.\n\nYou find three people who saw Mira: a bread seller near the east gate who saw her heading into the merchant quarter; a water carrier who saw her talking to two older boys outside a warehouse; and a scribe who says she saw Mira go into the warehouse and not come out.\n\nThe warehouse belongs to a merchant named Aldric. Niko, if he's with you, goes quiet when you say the name.\n\n\"He's not dangerous,\" Niko says carefully. \"But he's connected. To a lot of people.\"",
+    choices: [
+      {
+        text: "Go to the warehouse directly and knock on the door.",
+        statChanges: { Courage: 1, Cunning: -1 },
+        setsFlags: { approachedDirectly: true },
+        feedback: "A man answers who is not Aldric. He says Aldric isn't there. You say you're looking for a girl. He says he doesn't know any girl. His eyes move left when he says it \u2014 just slightly.",
+        lesson: "Direct approaches give you information \u2014 including information people don't intend to give you. Watching how someone lies can tell you as much as the truth.",
+      },
+      {
+        text: "Find out more about Aldric before going in.",
+        statChanges: { Wisdom: 2, Discipline: 1 },
+        setsFlags: { researchedFirst: true },
+        feedback: "An hour of careful questions reveals that Aldric runs messages for several wealthy families \u2014 including Lycon's. The package Mira was carrying might have been intended for one of them. This is more complicated than a missing girl.",
+        lesson: "When a situation turns out to be larger than it appeared, the most important response is not to panic but to revise your understanding. New information doesn't mean the situation is unsolvable \u2014 it means your first map was incomplete.",
+      },
+      {
+        text: "Send Niko in to ask around while you watch the outside.",
+        statChanges: { Cunning: 2, Empathy: 1 },
+        setsFlags: { usedNikoAsScout: true },
+        requiresFlag: "madeAllyOfNiko",
+        feedback: "Niko is perfect for this \u2014 he knows everyone and seems harmless. He comes back ten minutes later with the information that Mira is inside, unhurt, and is apparently refusing to leave until she delivers the package to the right person. She's not a hostage. She's being stubborn.",
+        lesson: "Using the right person for the right task is a form of intelligence. Recognizing what other people are good at \u2014 and trusting them with it \u2014 is how difficult things get done.",
+      },
+      {
+        text: "Go directly to the city authorities. This has gone too far for one person.",
+        statChanges: { Wisdom: 1, Discipline: 1, Courage: -1 },
+        setsFlags: { wentToAuthorities: true },
+        feedback: "The guard post takes your report seriously \u2014 more seriously than Delia's, which tells you something. They say they'll send someone in the morning. You spend the night unsure if you made the right call.",
+        lesson: "Knowing when to escalate to systems and institutions rather than act alone is genuine wisdom. It's not cowardice \u2014 it's recognizing that some situations need more than one person. The uncertainty you felt is the honest cost of that choice.",
+      },
+    ],
+  },
+
+  mira2: {
+    id: "ch3_mira2",
+    title: "The Thing You Didn't Predict",
+    image: "\u{2709}\uFE0F",
+    atmosphere: "The next morning. Mira is home. You should feel good. You mostly do \u2014 except.",
+    text: "Mira made it home. The package was delivered. Delia was grateful to tears.\n\nBut the package \u2014 it turns out \u2014 contained information about a trade arrangement that Aldric was managing for three merchant families. By delivering it to the craftsman (the correct recipient), Mira completed a transaction that cut Aldric out of a significant payment he was expecting.\n\nAldric is not dangerous. But he's unhappy. And he's connected.\n\nThis morning, you wake up to find that the inn won't serve you breakfast. The innkeeper is apologetic but firm \u2014 someone asked him not to. Someone with influence.\n\nYou did the right thing. The right thing has a bill attached.",
+    choices: [
+      {
+        text: "Accept it. You did the right thing. This is the cost.",
+        statChanges: { Courage: 2, Discipline: 2 },
+        setsFlags: { acceptedConsequence_ch3: true },
+        isRightChoiceHardOutcome: true,
+        feedback: "You find breakfast elsewhere. It's fine \u2014 just inconvenient and mildly humiliating. But something firms up in you: you'd do it again. Not because it didn't cost anything, but because you know what you were buying.",
+        lesson: "This is what it actually feels like when doing the right thing has a cost. Not dramatic. Not devastating. Just an inconvenience that arrived because you were honest. The question isn't whether to expect this \u2014 it's whether you can hold your values when it shows up anyway.",
+      },
+      {
+        text: "Go find Aldric and apologize \u2014 you didn't know you were hurting him.",
+        statChanges: { Empathy: 2, Wisdom: 1 },
+        setsFlags: { apologizedToAldric: true },
+        feedback: "Aldric is cold at first. But you explain that you didn't know \u2014 you were just finding a missing girl. Slowly, something in him shifts. He didn't expect an apology. 'I know it wasn't malicious,' he finally says. 'It still hurt.' You leave without his forgiveness \u2014 but without his animosity either.",
+        lesson: "Apologizing for harm you caused unintentionally \u2014 harm you would have caused anyway, given what you knew \u2014 is a mature form of empathy. You're not saying you were wrong. You're acknowledging that your actions had an effect on someone.",
+      },
+      {
+        text: "Find out who asked the innkeeper to deny you \u2014 and confront them.",
+        statChanges: { Courage: 1, Cunning: 1, Wisdom: -1 },
+        setsFlags: { confrontedAldricProxy: true },
+        feedback: "It was one of Aldric's associates \u2014 a minor functionary who overstepped. When you confront him, he backtracks immediately. The situation deflates. You got your breakfast, technically. But you spent two hours on a petty victory that solved nothing upstream.",
+        lesson: "Reacting to the symptom rather than the cause is a natural instinct \u2014 but it burns energy on the wrong thing. The associate wasn't the problem. Solving for him left the actual situation unchanged.",
+      },
+      {
+        text: "Go to Delia. She should know what her package caused.",
+        statChanges: { Wisdom: 2, Empathy: 1 },
+        setsFlags: { informedDelia: true },
+        feedback: "Delia listens quietly. Then she says something you didn't expect: 'I knew it would cause trouble. I sent it anyway because it was the right thing to do. I'm sorry it fell on you.' She presses a coin into your hand. 'For your breakfast.' It barely covers it. But she didn't have to say anything at all.",
+        lesson: "Going back to someone to close a loop \u2014 to tell them what their decision cost \u2014 is a form of honesty that most people avoid. Delia's response showed you something: sometimes the people who create difficult situations know they're doing it. That changes how you see them.",
+      },
+    ],
+  },
+
+  castor1: {
+    id: "ch3_castor1",
+    title: "The Sabotage",
+    image: "\u{1F3DF}\uFE0F",
+    atmosphere: "The athletics ground at dusk. Sand, sweat, the smell of olive oil.",
+    text: "Castor is fifteen, serious, and trying hard not to look scared. The games are tomorrow morning. His sandals \u2014 competition sandals, made to fit his exact foot \u2014 are gone. The ones left in their place are close but wrong: a quarter size too small, with a strap in a slightly different position. Enough to cause a blister in the first quarter mile. Enough, in a long race, to matter.\n\nHe has one lead: his main rival, a boy named Pelias, was seen near the equipment room yesterday evening. But Castor says immediately: \"I don't want to accuse him if I'm wrong.\"\n\nThe trainer, who is less generous, says: \"It was Pelias. It had to be.\"",
+    choices: [
+      {
+        text: "The trainer is probably right. Go confront Pelias.",
+        statChanges: { Courage: 1, Wisdom: -1 },
+        setsFlags: { confrontedPelias: true, actedOnAssumption: true },
+        feedback: "Pelias denies it \u2014 and he seems genuinely confused, not defensive. Later you find out he was at the docks yesterday evening, which three people can confirm. You accused the wrong person. The real culprit, watching from the edge of the ground, relaxes.",
+        lesson: "The most obvious suspect and the actual culprit are not always the same person. Acting on a trainer's assumption rather than evidence felt like action \u2014 but it was just movement. Movement and progress are different things.",
+      },
+      {
+        text: "Ask Castor who else had access to the equipment room.",
+        statChanges: { Wisdom: 2, Cunning: 1 },
+        setsFlags: { investigatedProperly: true },
+        feedback: "Three people, it turns out, had keys: Pelias, the equipment steward, and an older athlete who helps train the younger ones. Castor goes quiet when you name the third one. 'He's been angry at me lately,' Castor says slowly. 'I beat his record last month.' The picture changes.",
+        lesson: "Asking who had the means to do something \u2014 not just who had the motive \u2014 is how real investigations work. This is the same thinking behind good chess: not just what your opponent wants, but what they're able to do.",
+      },
+      {
+        text: "Focus on the immediate problem \u2014 can you find or make new sandals by morning?",
+        statChanges: { Discipline: 2, Cunning: 1 },
+        setsFlags: { solvedPractically: true },
+        feedback: "You spend three hours calling in favors \u2014 Niko, if you have him, is invaluable \u2014 and locate a leather worker who can adjust a close-enough pair by midnight. Castor gets his sandals. The saboteur is never identified. Castor wins the race. Nobody is punished. You find this unsatisfying in a way you can't quite name.",
+        lesson: "Solving the immediate problem is real and valuable. But there's a difference between fixing a situation and resolving it. Castor is fine \u2014 but the person who did this will do it again, to someone else. The pragmatic solution and the just solution are not always the same.",
+      },
+      {
+        text: "Tell Castor to withdraw from the race. Competing on bad sandals is too risky.",
+        statChanges: { Wisdom: 1, Discipline: 1, Courage: -1 },
+        setsFlags: { advisedWithdrawal: true },
+        feedback: "Castor looks at you for a long time. Then he shakes his head. 'If I withdraw, whoever did this wins. I'd rather finish last.' He races in the sabotaged sandals. He doesn't finish last. He finishes third \u2014 and limps for a week. He seems, improbably, fine with this.",
+        lesson: "Sometimes the person most affected by a situation knows better than anyone what the right risk to take is. Advising someone to play it safe is not always caring for them \u2014 sometimes it underestimates what they're willing to pay.",
+      },
+    ],
+  },
+
+  castor2: {
+    id: "ch3_castor2",
+    title: "The Part You Didn't Plan For",
+    image: "\u{1F3C3}",
+    atmosphere: "After the race. The crowd is thinning. The trainer finds you.",
+    text: "Castor's race is over \u2014 however it ended, he ran it.\n\nBut something else has happened. While you were at the athletics ground, news arrives: the older athlete \u2014 the one who trained Castor, the one whose record Castor broke \u2014 has been formally accused by three other young athletes of the same thing he did to Castor. Your questions yesterday opened something. Other people started talking.\n\nThe older athlete, whose name is Theron, has now been suspended from the athletics ground pending an inquiry. His family has lost significant standing. His younger sister \u2014 who had nothing to do with any of this \u2014 has been excluded from her training group by association.\n\nYou helped Castor. In doing so, you pulled a thread that unraveled something larger. Some of what came out was just. Some of it wasn't. You didn't intend any of it.",
+    choices: [
+      {
+        text: "This is what happens when the truth comes out. You can't control what people do with it.",
+        statChanges: { Wisdom: 2, Discipline: 1 },
+        setsFlags: { acceptedComplexConsequence: true },
+        isRightChoiceHardOutcome: true,
+        feedback: "You believe this. You also find it harder to believe cleanly than you expected. Theron deserved to be held accountable. His sister didn't deserve to be punished for it. Both things are true. The world did not resolve them neatly, and neither can you.",
+        lesson: "Just consequences and unjust side-effects can come from the same action. This doesn't mean you acted wrongly. It means that in a connected world, good actions sometimes disturb things that weren't supposed to move. Wisdom is holding that complexity without letting it paralyze you or make you cynical.",
+      },
+      {
+        text: "Talk to Theron's sister. She shouldn't be punished for what her brother did.",
+        statChanges: { Empathy: 3, Courage: 1 },
+        setsFlags: { defendedTheronsSister: true },
+        feedback: "Her name is Lyra. She's nine \u2014 the same age you started your journey, you realize. She doesn't fully understand why things have changed. You spend an afternoon talking to her training group and her trainer. It changes nothing official. But Lyra isn't excluded anymore. You don't know how long that lasts.",
+        lesson: "When a just action creates an unjust side effect, and you have the ability to do something about the side effect, doing it is not fixing your mistake \u2014 you didn't make one. It's just caring about the person who got caught in something that wasn't about them.",
+      },
+      {
+        text: "Go back to the athletes who came forward. Make sure their stories are solid.",
+        statChanges: { Discipline: 2, Wisdom: 1 },
+        setsFlags: { verifiedAccusations: true },
+        feedback: "Two of the three accounts hold up completely. The third is shakier \u2014 someone who had a grudge and exaggerated. You tell the inquiry official privately. It complicates things and slows the process. But it makes the final outcome more accurate. Theron is still suspended. But for what he actually did, not the exaggerated version.",
+        lesson: "Making sure a just outcome is reached accurately \u2014 even when it slows things down, even when it means questioning people who are mostly right \u2014 is the difference between justice and a mob. Both feel the same from the outside. They're not.",
+      },
+      {
+        text: "This is beyond what you can manage. Focus on what's in front of you.",
+        statChanges: { Discipline: 2 },
+        feedback: "You move on. Castor is fine. You did what you came to do. The rest of it resolves itself, one way or another, without your involvement. You notice \u2014 quietly, without drama \u2014 that you feel the weight of stepping back from it. Not guilt. Just weight.",
+        lesson: "Choosing the limits of your involvement is sometimes the right call. Not every consequence of your actions is yours to resolve. But it's worth noticing that choosing those limits has a feeling. That feeling is information.",
+      },
+    ],
+  },
+
+  convergence: {
+    id: "ch3_convergence",
+    title: "The Name You Made",
+    image: "\u{1F305}",
+    atmosphere: "The central square of Corinth. Late afternoon. People moving in every direction.",
+    textVariants: {
+      liedToLyconsAgent: "You're crossing the central square when you hear someone say your name.\n\nNot just your name \u2014 your name and your city and something about the Temple of Apollo and Lycon. Your name has made it here before you did.\n\nThe person who said it is a well-dressed woman sitting at a merchant's table. She looks up at you with an expression you can't read. \"Sit down,\" she says. \"I'm not Lycon's enemy or his friend. I'm someone who watched what you did at the temple and has been waiting to see what kind of person you are.\" She pauses. \"I have a decision to make about something. And I think your answer to one question will help me make it.\"\n\nShe already knows what you told Lycon's agent. You can see it in how she's looking at you.\n\nHer question: \"If you had known in advance that speaking up at the temple would cost you what it has \u2014 the agents, the delays, the innkeeper, all of it \u2014 would you have done it anyway?\"",
+      default: "You're crossing the central square when you hear someone say your name.\n\nNot just your name \u2014 your name and your city and something about the Temple of Apollo and Lycon. Your name has made it here before you did.\n\nThe person who said it is a well-dressed woman sitting at a merchant's table. She looks up at you with an expression you can't read. \"Sit down,\" she says. \"I'm not Lycon's enemy or his friend. I'm someone who watched what you did at the temple and has been waiting to see what kind of person you are.\" She pauses. \"I have a decision to make about something. And I think your answer to one question will help me make it.\"\n\nHer question: \"If you had known in advance that speaking up at the temple would cost you what it has \u2014 the agents, the delays, the innkeeper, all of it \u2014 would you have done it anyway?\"",
+    },
+    choices: [
+      {
+        text: "Yes. I'd do it again.",
+        statChanges: { Courage: 2, Discipline: 2 },
+        setsFlags: { answeredWomanHonestly: true },
+        feedback: "She studies you for a long moment. Then she nods \u2014 once, slowly. 'That's the answer,' she says. She doesn't explain what decision she was making. She slides a folded note across the table. 'This is for Lycon. Not from me \u2014 I've already sent mine. But he responds better when the same message comes from multiple sources.' The note says, in three sentences, that the matter at the temple was the act of a single honest person and that pursuing it further will cost him more than it's worth.",
+        lesson: "Consistency is a form of power. When your actions in one place match your stated values in another \u2014 when you'd make the same choice again knowing the cost \u2014 people notice. This woman wasn't testing your courage. She was testing whether you were the same person who walked into that temple.",
+      },
+      {
+        text: "Honestly \u2014 I'm not sure. The cost was real.",
+        statChanges: { Wisdom: 2, Empathy: 1 },
+        setsFlags: { answeredWomanHonestly: true },
+        feedback: "She leans back slightly. 'That's the most honest answer I've heard in this city in a week.' She slides the note across anyway. 'The ones who say yes without hesitating \u2014 I don't trust them. Real decisions cost something. If it didn't cost you anything to consider, you weren't really deciding.'",
+        lesson: "Admitting uncertainty about a difficult past decision isn't weakness \u2014 it's honesty. The woman respected it more than a confident yes would have. Certainty about hard things is often a sign someone hasn't really thought them through.",
+      },
+      {
+        text: "No. I'd have found a quieter way to handle it.",
+        statChanges: { Wisdom: 2, Cunning: 1 },
+        feedback: "She tilts her head. 'And would the result have been the same?' You think about it. Maybe. Maybe not. She doesn't give you the note. But she doesn't seem disappointed either. 'The smartest choice and the right choice aren't always the same. Sometimes the person who finds the quieter way does more good. Sometimes they do less. It depends on more than they can know.'",
+        lesson: "Saying you'd do it differently isn't betraying your values \u2014 it's refining them. There's a version of courage that's about method, not about whether to act. This woman didn't disagree with you. She was thinking alongside you.",
+      },
+      {
+        text: "Ask her what decision she's actually making first.",
+        statChanges: { Cunning: 2, Wisdom: 1 },
+        setsFlags: { askedWomanHerQuestion: true },
+        feedback: "She pauses. Then she laughs, quietly. 'Fair.' She tells you: she's deciding whether to send a message to Lycon \u2014 a message that could end his pursuit of you, but that requires her to use influence she'd rather not spend. She wanted to know if you were worth it. 'Now I know,' she says, and slides the note across.",
+        lesson: "Asking what someone actually wants before answering their question is a form of Cunning that often looks like rudeness but isn't. You got the same outcome \u2014 and more information. Understanding someone's purpose changes what your answer means.",
+      },
+    ],
+  },
+};
+
+export const chapter3Fork = {
+  id: "ch3_fork",
+  title: "Two Things Need Doing",
+  description: "That evening, two requests reach you almost simultaneously.\n\nA woman named Delia finds you at the inn. Her daughter Mira, twelve years old, was supposed to deliver a package across the city two days ago and hasn't come home. The package contained something important \u2014 she won't say what. She's asked the city guards and they've done nothing.\n\nHalf an hour later, a trainer from the athletics ground comes looking for someone \u2014 anyone \u2014 who might help. His best young runner, a boy named Castor, was supposed to compete in tomorrow's games. Someone has stolen his competition sandals and replaced them with a pair that are slightly the wrong size \u2014 enough to injure him in a race, but not obviously. He thinks it was done deliberately.\n\nYou can only pursue one tonight.",
+  paths: [
+    {
+      id: "messengerPath",
+      icon: "\u{1F50D}",
+      label: "Find Mira",
+      description: "A girl is missing. Her mother is frightened. The city guards aren't helping.",
+      statBias: { Empathy: "favors understanding", Wisdom: "favors thinking" },
+    },
+    {
+      id: "arenaPath",
+      icon: "\u{1F3C3}",
+      label: "Help Castor",
+      description: "A boy's competition has been sabotaged. Someone did this deliberately.",
+      statBias: { Discipline: "favors focus", Cunning: "favors investigation" },
+    },
+  ],
+};

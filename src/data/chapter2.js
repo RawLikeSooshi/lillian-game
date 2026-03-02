@@ -4,6 +4,7 @@ const chapter2 = [
     title: "The Market at Corinth",
     chapter: 2,
     image: "🏪",
+    transitionText: "The road from Delphi takes you through farmland and olive groves. By midday, you smell salt and bread on the air. Corinth.",
     atmosphere: "Stone streets and the smell of bread and salt. The market is busy and loud.",
     textVariants: {
       helpedOldWoman: `The Oracle's words are still turning in your mind as you pass through the market at Corinth. You think about the old woman from the road — whether she was who she seemed to be.\n\nThen you hear a boy crying. His coin purse is gone. He's pointing at a rough-looking man disappearing into the crowd.\n\nYou watch the man for a moment before acting — and you see something unexpected. He slips the coins to a small girl sitting in the dirt near a bread stall, then keeps walking. He kept nothing for himself.`,
@@ -45,6 +46,7 @@ const chapter2 = [
     title: "The Figure at the Well",
     chapter: 2,
     image: "💧",
+    transitionText: "You leave the market behind. The road quiets. Outside the city walls, the air cools.",
     atmosphere: "A quiet road outside the city. A stone well. Someone waiting.",
     textTemplate: `Outside the city walls you find a well, and beside it — {figure.disguise}.\n\n{figure.greeting}\n\nYou're not sure why, but something about them makes you want to stay.`,
     choices: [
@@ -83,6 +85,7 @@ const chapter2 = [
     title: "The Question With No Clean Answer",
     chapter: 2,
     image: "⚖️",
+    transitionText: "You walk together in silence for a while. The road stretches ahead.",
     atmosphere: "The road is quiet. The figure has stopped walking. They want to ask you something.",
     textTemplate: `The figure stops walking and turns to face you.\n\n"I want to ask you something," they say. "Not to test you. Because I want to know how you think."\n\nThey describe a situation:\n\n"Two soldiers stand before a general. He orders both of them to burn a village — he believes enemy soldiers are hiding there. The first soldier refuses. He says burning homes is wrong. He is arrested.\n\nThe second soldier obeys. When they arrive, they find only farmers. No enemies. The village burns.\n\nWhich soldier was right?"\n\nThey wait. They're not going to help you.`,
     choices: [
@@ -121,6 +124,7 @@ const chapter2 = [
     title: "The Consequence",
     chapter: 2,
     image: "🗡️",
+    transitionText: "The afternoon heat presses down. Dust coats your sandals. Then you see them — three figures on the road ahead.",
     atmosphereVariants: {
       spokeAgainstLycon: "Three men on the road ahead. They're looking at everyone who passes. One of them has a piece of parchment.",
       default: "Three men on the road ahead. They stop travelers and ask questions. They don't seem to be looking for you specifically.",
@@ -169,6 +173,7 @@ const chapter2 = [
     title: "The Easy Way Out",
     chapter: 2,
     image: "🪙",
+    transitionText: "Evening falls. You find an inn. The figure does not follow you inside.",
     atmosphere: "Later that evening. One of the agents, alone, finds you at an inn.",
     text: `You're eating quietly when one of Lycon's men sits across from you. Not the one in charge — a younger one, with an uncomfortable look on his face.\n\n"I'm going to be straight with you," he says. "Lycon doesn't really care about you. He cares about who put you up to it. Tell him someone put you up to embarrassing him at the temple — a name, any name — and this ends. You go free. He's satisfied. Nobody gets hurt."\n\nHe pauses. "I'll be honest — others have already given names. You'd just be confirming what he already thinks he knows."\n\nThe figure is not here. It's just you.`,
     choices: [
