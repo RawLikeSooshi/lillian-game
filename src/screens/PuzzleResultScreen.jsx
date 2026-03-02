@@ -5,8 +5,14 @@ import { bg, puzzleCard, goldBtn } from "../styles";
 
 export default function PuzzleResultScreen({ puzzle, puzzleState, stats, inventory, onContinue }) {
   const solved = puzzleState.solved;
+  const forced = puzzleState.forced;
   const statChanges = solved ? (puzzle.onSolve || {}) : (puzzle.onSkip || {});
-  const message = solved ? puzzle.solveMessage : puzzle.skipMessage;
+  const message = solved
+    ? puzzle.solveMessage
+    : forced
+      ? (puzzle.forceMessage || puzzle.skipMessage)
+      : puzzle.skipMessage;
+  const statusLabel = solved ? "Solved" : forced ? "Struggled Through" : "Skipped";
 
   return (
     <div style={bg}>
@@ -19,12 +25,12 @@ export default function PuzzleResultScreen({ puzzle, puzzleState, stats, invento
 
       <div style={puzzleCard}>
         <h3 style={{ color: "#6b8fd4", marginBottom: 10, fontSize: 12, fontVariant: "small-caps", letterSpacing: 1 }}>
-          {puzzle.title} — {solved ? "Solved" : "Skipped"}
+          {puzzle.title} — {statusLabel}
         </h3>
 
         <div style={{
-          background: solved ? "rgba(76,175,138,0.08)" : "rgba(160,128,96,0.08)",
-          border: `1px solid ${solved ? "rgba(76,175,138,0.25)" : "rgba(160,128,96,0.25)"}`,
+          background: solved ? "rgba(76,175,138,0.08)" : forced ? "rgba(232,160,58,0.08)" : "rgba(160,128,96,0.08)",
+          border: `1px solid ${solved ? "rgba(76,175,138,0.25)" : forced ? "rgba(232,160,58,0.25)" : "rgba(160,128,96,0.25)"}`,
           borderRadius: 9,
           padding: 13,
           marginBottom: 12,

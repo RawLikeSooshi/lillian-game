@@ -10,10 +10,8 @@ export const chapter1Puzzles = {
     correctIndex: 0,
     hints: [
       "Think about something that is very tall but doesn't move.",
-      "It has roots underground, but it isn't a plant.",
-      "You can see one from the road to Delphi right now.",
+      "It has roots underground, but it isn't a plant. You can see one from the road to Delphi right now.",
     ],
-    hintCosts: [{}, { Wisdom: -1 }, { Wisdom: -1 }],
     askParentPrompt: null,
     onSolve: { Wisdom: 2, Courage: 1 },
     onSkip: { Discipline: 1 },
@@ -21,6 +19,7 @@ export const chapter1Puzzles = {
     skipFlag: "skippedSphinxRiddle",
     solveMessage: "The Sphinx closes her eyes slowly. 'You may pass.' As you walk by, you notice she leaves behind a rolled papyrus on the stone.",
     skipMessage: "The Sphinx watches you turn away. 'The path is still open,' she says. 'Not every riddle needs solving today.' You feel something shift \u2014 a door closing softly, not slamming.",
+    forceMessage: "The Sphinx sighs \u2014 not with disappointment, but something like patience. 'The answer was a mountain,' she says. 'You may still pass. Not every riddle falls on the first try.' She steps aside, but you notice she leaves no papyrus behind.",
     setsInventory: ["sphinxPapyrus"],
   },
   oracleDoor: {
@@ -39,10 +38,8 @@ export const chapter1Puzzles = {
     correctIndex: 0,
     hints: [
       "Read the riddle literally \u2014 'first in the day' means the first thing in daytime.",
-      "The Sun rules the day. The Moon rules the night. The Stars rule the heavens.",
-      "The answer might be simpler than you think. What comes first, second, third?",
+      "The Sun rules the day. The Moon rules the night. The Stars rule the heavens. The answer might be simpler than you think.",
     ],
-    hintCosts: [{}, { Wisdom: -1 }, { Wisdom: -1 }],
     askParentPrompt: "The door has three symbols: Sun, Moon, and Star. The riddle asks about what comes first in the day, second at night, and third in the heavens. What do you think the order should be, and why?",
     onSolve: { Wisdom: 2 },
     onSkip: { Discipline: 1 },
@@ -50,6 +47,7 @@ export const chapter1Puzzles = {
     skipFlag: "skippedOracleDoor",
     solveMessage: "The bronze door swings open silently. Inside, a silver feather sits on a pedestal. You take it \u2014 it feels like it was left here for you.",
     skipMessage: "The priest nods. 'The Oracle sees all who come \u2014 even those who don't open every door.' He leads you through a side passage.",
+    forceMessage: "The priest watches your attempts with gentle eyes. 'Sun, Moon, Star \u2014 the natural order,' he says, touching the symbols. 'You were close. The door opens for honest effort too.' He lets you through, though the pedestal inside is empty.",
     setsInventory: ["oracleFeather"],
   },
 };

@@ -1,18 +1,18 @@
 import { useState } from "react";
 import StatBar from "../components/StatBar";
 import InventoryBar from "../components/InventoryBar";
-import { STAT_ICONS } from "../engine/stats";
-import { canUseHint, getHintCost } from "../engine/puzzleEngine";
 import { bg, puzzleCard, goldBtn } from "../styles";
 
-export default function PuzzleScreen({ heroName, puzzle, puzzleState, stats, inventory, chapter, onAnswer, onHint, onSkip, onAskParent }) {
+export default function PuzzleScreen({ heroName, puzzle, puzzleState, stats, inventory, chapter, onAnswer, onSkip, onAskParent }) {
   const [selected, setSelected] = useState(null);
+  const hasWrongAttempt = puzzleState.wrongAttempts > 0;
+  const hintsExhausted = puzzleState.hintsUsed >= puzzle.hints.length;
 
   return (
     <div style={bg}>
       <div style={{ ...puzzleCard, marginBottom: 10, padding: "11px 16px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 7 }}>
-          <span style={{ color: "#6b8fd4", fontSize: 12, fontVariant: "small-caps" }}>🧩 {heroName}</span>
+          <span style={{ color: "#6b8fd4", fontSize: 12, fontVariant: "small-caps" }}>{"\u{1F9E9}"} {heroName}</span>
           <span style={{ color: "#a08060", fontSize: 10 }}>Chapter {chapter} — Puzzle</span>
         </div>
         {inventory.length > 0 && <InventoryBar inventory={inventory} />}
@@ -33,7 +33,38 @@ export default function PuzzleScreen({ heroName, puzzle, puzzleState, stats, inv
           ))}
         </div>
 
-        {/* Hints */}
+        {/* Wrong answer feedback */}
+        {hasWrongAttempt && !hintsExhausted && (
+          <div style={{
+            background: "rgba(232,93,58,0.08)",
+            border: "1px solid rgba(232,93,58,0.25)",
+            borderRadius: 8,
+            padding: "8px 12px",
+            marginBottom: 10,
+            textAlign: "center",
+          }}>
+            <p style={{ margin: 0, fontSize: 12, color: "#e8a060", fontStyle: "italic" }}>
+              Not quite right. Here's something to help you think about it...
+            </p>
+          </div>
+        )}
+
+        {hasWrongAttempt && hintsExhausted && (
+          <div style={{
+            background: "rgba(232,93,58,0.08)",
+            border: "1px solid rgba(232,93,58,0.25)",
+            borderRadius: 8,
+            padding: "8px 12px",
+            marginBottom: 10,
+            textAlign: "center",
+          }}>
+            <p style={{ margin: 0, fontSize: 12, color: "#e8a060", fontStyle: "italic" }}>
+              This is a tough one. Give it one more try — or you can move on.
+            </p>
+          </div>
+        )}
+
+        {/* Hints (auto-revealed on wrong answers) */}
         {puzzleState.hintsUsed > 0 && (
           <div style={{ marginBottom: 12 }}>
             {puzzle.hints.slice(0, puzzleState.hintsUsed).map((hint, i) => (
@@ -79,28 +110,6 @@ export default function PuzzleScreen({ heroName, puzzle, puzzleState, stats, inv
 
         {/* Action buttons */}
         <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 8 }}>
-          {canUseHint(puzzleState, puzzle) && (
-            <button onClick={onHint} style={{
-              background: "rgba(107,143,212,0.1)",
-              border: "1px solid rgba(107,143,212,0.3)",
-              borderRadius: 7,
-              padding: "8px 14px",
-              color: "#6b8fd4",
-              fontSize: 12,
-              fontFamily: "Georgia,serif",
-              cursor: "pointer",
-            }}>
-              Use Hint ({puzzle.hints.length - puzzleState.hintsUsed} remaining)
-              {(() => {
-                const cost = getHintCost(puzzle, puzzleState.hintsUsed);
-                const entries = Object.entries(cost);
-                if (entries.length === 0) return null;
-                return <span style={{ marginLeft: 6, fontSize: 10, color: "#e85d3a" }}>
-                  {entries.map(([s, v]) => `${STAT_ICONS[s]} ${v}`).join(" ")}
-                </span>;
-              })()}
-            </button>
-          )}
           {puzzle.tier === 2 && onAskParent && (
             <button onClick={onAskParent} style={{
               background: "rgba(250,248,240,0.1)",
@@ -130,7 +139,7 @@ export default function PuzzleScreen({ heroName, puzzle, puzzleState, stats, inv
         </div>
 
         {selected !== null && (
-          <button onClick={() => onAnswer(selected)} style={{ ...goldBtn, width: "100%" }}>
+          <button onClick={() => { onAnswer(selected); setSelected(null); }} style={{ ...goldBtn, width: "100%" }}>
             Confirm Answer →
           </button>
         )}

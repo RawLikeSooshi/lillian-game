@@ -15,10 +15,8 @@ export const chapter2Puzzles = {
     correctIndex: -1,
     hints: [
       "There's no single right answer here. Think about what each choice says about the farmer's values.",
-      "Consider: is the farmer repaying a debt, showing mercy, being practical, or being self-preserving? All are defensible.",
-      "The figure isn't looking for the 'correct' answer. They're looking for whether you can explain your reasoning.",
+      "Consider: is the farmer repaying a debt, showing mercy, being practical, or being self-preserving? The figure isn't looking for the 'correct' answer \u2014 they're looking for whether you can explain your reasoning.",
     ],
-    hintCosts: [{}, {}, {}],
     askParentPrompt: null,
     onSolve: { Wisdom: 1, Empathy: 1 },
     onSkip: { Discipline: 1 },
@@ -26,6 +24,7 @@ export const chapter2Puzzles = {
     skipFlag: "skippedFigureTest",
     solveMessage: "The figure nods slowly. 'There is no wrong answer to that question. But the fact that you chose one \u2014 and thought about it \u2014 tells me what I needed to know.' They gesture for you to walk with them.",
     skipMessage: "The figure watches you think. 'Not every question demands an immediate answer,' they say gently. 'The willingness to sit with it is enough for now.' They gesture for you to walk with them.",
+    forceMessage: "The figure watches you struggle and nods slowly. 'The question is harder than it looks. That's the point.' They gesture for you to walk with them. 'You'll think about it later. That counts.'",
     setsInventory: ["figureToken"],
   },
   sphinxPapyrus: {
@@ -39,10 +38,8 @@ export const chapter2Puzzles = {
     correctIndex: 0,
     hints: [
       "Think about something that changes size \u2014 it 'grows' \u2014 but isn't a living creature.",
-      "It needs air to exist but would be destroyed by water.",
-      "You've probably sat next to one on a cold night.",
+      "It needs air to exist but would be destroyed by water. You've probably sat next to one on a cold night.",
     ],
-    hintCosts: [{}, { Wisdom: -1 }, { Wisdom: -1 }],
     askParentPrompt: "The Sphinx left a riddle on a magical papyrus. Something that grows but isn't alive, needs air but has no lungs, and is killed by water. What do you think it could be? Have you heard riddles like this before?",
     onSolve: { Wisdom: 2, Cunning: 1 },
     onSkip: { Discipline: 1 },
@@ -50,5 +47,6 @@ export const chapter2Puzzles = {
     skipFlag: "skippedSphinxPapyrus",
     solveMessage: "The papyrus glows faintly, then the text fades. New text appears: 'One more remains. You will know when.' The Sphinx is not done with you.",
     skipMessage: "The text fades on its own after a while. The papyrus feels lighter, as if it expected more of you \u2014 but isn't angry about it.",
+    forceMessage: "The papyrus glows faintly, then the text rearranges itself: 'Fire. The answer was fire.' The glow fades. New text appears briefly: 'Not every flame catches on the first spark.' Then that fades too.",
   },
 };

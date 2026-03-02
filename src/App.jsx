@@ -5,7 +5,7 @@ import { INITIAL_INVENTORY } from "./data/items";
 import { applyInventoryChanges, removeItem } from "./engine/inventory";
 import { resolveSceneText, resolveChoiceText } from "./engine/sceneText";
 import { STEP_TYPES, getSceneCount, getSceneNumber } from "./engine/flow";
-import { INITIAL_PUZZLE_STATE, checkAnswer, useHint, getHintCost } from "./engine/puzzleEngine";
+import { INITIAL_PUZZLE_STATE, checkAnswer } from "./engine/puzzleEngine";
 import { getChapter1Flow } from "./data/chapter1Flow";
 import { getChapter2Flow } from "./data/chapter2Flow";
 import { getChapter3Flow } from "./data/chapter3Flow";
@@ -56,6 +56,33 @@ export default function App() {
   const resolvedScene = currentStep?.type === STEP_TYPES.SCENE
     ? resolveSceneText(currentStep.scene, flags, figure)
     : null;
+
+  // Auto-save at clean phases
+  const SAVE_KEY = "hero-of-olympus-save";
+  useEffect(() => {
+    if (["scene", "transition", "puzzle", "questFork", "end"].includes(phase) && heroName) {
+      const save = {
+        heroName, chapter, stepIndex, stats, flags, inventory,
+        forkChoice, ch1EndStats, ch2EndStats, phase,
+      };
+      try { localStorage.setItem(SAVE_KEY, JSON.stringify(save)); } catch (_) {}
+    }
+  }, [phase, chapter, stepIndex, stats, flags, inventory, forkChoice, heroName]);
+
+  const loadSave = (save) => {
+    setHeroName(save.heroName);
+    setNameInput(save.heroName);
+    setChapter(save.chapter);
+    setStepIndex(save.stepIndex);
+    setStats(save.stats);
+    setFlags(save.flags);
+    setInventory(save.inventory);
+    setForkChoice(save.forkChoice || null);
+    setCh1EndStats(save.ch1EndStats || null);
+    setCh2EndStats(save.ch2EndStats || null);
+    setPuzzleState(INITIAL_PUZZLE_STATE);
+    setPhase(save.phase || "scene");
+  };
 
   // After fork confirmation, flow recomputes — detect and set correct phase
   useEffect(() => {
@@ -131,8 +158,20 @@ export default function App() {
     if (correct) {
       handlePuzzleSolve(puzzle);
     } else {
-      // Wrong answer — let them try again (no penalty, just stay on puzzle)
-      setPuzzleState(ps => ({ ...ps, selectedAnswer: selectedIndex }));
+      const newAttempts = puzzleState.wrongAttempts + 1;
+      const hintsAvailable = puzzle.hints.length - puzzleState.hintsUsed;
+      if (hintsAvailable > 0) {
+        // Wrong answer — auto-reveal next hint
+        setPuzzleState(ps => ({
+          ...ps,
+          selectedAnswer: selectedIndex,
+          wrongAttempts: newAttempts,
+          hintsUsed: ps.hintsUsed + 1,
+        }));
+      } else {
+        // All hints exhausted + still wrong — force through with penalty
+        handlePuzzleForce(puzzle);
+      }
     }
   };
 
@@ -168,17 +207,18 @@ export default function App() {
     setPhase("puzzleResult");
   };
 
-  const handleHint = () => {
-    const puzzle = currentStep.puzzle;
-    const cost = getHintCost(puzzle, puzzleState.hintsUsed);
-    if (Object.keys(cost).length > 0) {
-      const ns = { ...stats };
-      Object.entries(cost).forEach(([k, v]) => {
+  const handlePuzzleForce = (puzzle) => {
+    const ns = { ...stats };
+    if (puzzle.onSkip) {
+      Object.entries(puzzle.onSkip).forEach(([k, v]) => {
         ns[k] = Math.max(0, Math.min(10, ns[k] + v));
       });
-      setStats(ns);
     }
-    setPuzzleState(useHint(puzzleState));
+    setStats(ns);
+    const nf = applyFlags(flags, { [puzzle.skipFlag]: true });
+    setFlags(nf);
+    setPuzzleState(ps => ({ ...ps, forced: true }));
+    setPhase("puzzleResult");
   };
 
   const handleForkSelect = (pathId) => {
@@ -238,12 +278,24 @@ export default function App() {
     setPuzzleState(INITIAL_PUZZLE_STATE);
     setPendingForkChoice(null);
     setInventoryGained([]);
+    try { localStorage.removeItem(SAVE_KEY); } catch (_) {}
   };
 
   // --- Phase routing ---
 
   if (phase === "welcome") {
-    return <WelcomeScreen onBegin={() => setPhase("name")} />;
+    let savedGame = null;
+    try {
+      const raw = localStorage.getItem(SAVE_KEY);
+      if (raw) savedGame = JSON.parse(raw);
+    } catch (_) {}
+    return (
+      <WelcomeScreen
+        onBegin={() => setPhase("name")}
+        savedGame={savedGame}
+        onContinue={() => savedGame && loadSave(savedGame)}
+      />
+    );
   }
 
   if (phase === "name") {
@@ -313,7 +365,6 @@ export default function App() {
         inventory={inventory}
         chapter={chapter}
         onAnswer={handlePuzzleAnswer}
-        onHint={handleHint}
         onSkip={() => handlePuzzleSkip(currentStep.puzzle)}
         onAskParent={currentStep.puzzle.tier === 2 ? () => setPhase("askParent") : null}
       />

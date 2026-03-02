@@ -9,11 +9,11 @@ const STAT_DESCRIPTIONS = {
   Cunning: "Finding clever solutions",
 };
 
-export default function WelcomeScreen({ onBegin }) {
+export default function WelcomeScreen({ onBegin, savedGame, onContinue }) {
   return (
     <div style={bg}>
       <div style={{ ...card, textAlign: "center", marginTop: 24 }}>
-        <div style={{ fontSize: 56, marginBottom: 8 }}>🏛️</div>
+        <div style={{ fontSize: 56, marginBottom: 8 }}>{"\u{1F3DB}\uFE0F"}</div>
         <h1 style={{ fontSize: 24, color: "#d4a017", letterSpacing: 3, marginBottom: 5, fontVariant: "small-caps" }}>Hero of Olympus</h1>
         <p style={{ fontSize: 10, color: "#a08060", letterSpacing: 4, marginBottom: 18 }}>CHAPTER I — THE ROAD TO DELPHI</p>
         <p style={{ lineHeight: 1.9, color: "#c8b88a", marginBottom: 18, fontSize: 14 }}>In ancient Greece, every hero begins with a single choice.<br/>The gods don't judge you by your power — they judge you by your character.<br/><br/>The choices you make will shape who you become.<br/>There are no wrong answers. Only different kinds of heroes.</p>
@@ -27,7 +27,28 @@ export default function WelcomeScreen({ onBegin }) {
             </div>
           ))}
         </div>
-        <button onClick={onBegin} style={goldBtn}>Begin Your Journey →</button>
+        {savedGame ? (
+          <>
+            <button onClick={onContinue} style={{ ...goldBtn, marginBottom: 8 }}>
+              Continue {savedGame.heroName}'s Journey — Ch.{savedGame.chapter} →
+            </button>
+            <button onClick={onBegin} style={{
+              background: "rgba(212,160,23,0.1)",
+              border: "1px solid rgba(212,160,23,0.3)",
+              borderRadius: 7,
+              padding: "10px 16px",
+              color: "#d4a017",
+              fontSize: 13,
+              fontFamily: "Georgia,serif",
+              cursor: "pointer",
+              width: "100%",
+            }}>
+              Start a New Adventure
+            </button>
+          </>
+        ) : (
+          <button onClick={onBegin} style={goldBtn}>Begin Your Journey →</button>
+        )}
       </div>
     </div>
   );

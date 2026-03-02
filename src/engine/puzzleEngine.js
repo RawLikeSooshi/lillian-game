@@ -1,8 +1,10 @@
 export const INITIAL_PUZZLE_STATE = {
   hintsUsed: 0,
+  wrongAttempts: 0,
   selectedAnswer: null,
   solved: false,
   skipped: false,
+  forced: false,
 };
 
 export function canUseHint(puzzleState, puzzle) {

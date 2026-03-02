@@ -14,11 +14,9 @@ export const chapter3Puzzles = {
     ],
     correctIndex: 3,
     hints: [
-      "Go through the clues one at a time and eliminate people who fail any single clue.",
-      "Clue 3 eliminates the merchant. Clue 2 eliminates odd numbers \u2014 which takes out the priest on Athena Street 3.",
-      "Hermes Street 4 and Poseidon Street 8 both pass clues 1 and 2. Clue 3 says not a merchant \u2014 the weaver isn't a merchant, but check: is a weaver a merchant? Weavers make things. Merchants sell things. They're different.",
+      "Go through the clues one at a time and eliminate people who fail any single clue. Clue 3 eliminates the merchant. Clue 2 eliminates odd numbers.",
+      "The weaver on Hermes Street 4 and the craftsman on Poseidon Street 8 both pass clues 1 and 2. But a weaver makes things \u2014 are they a merchant? Think about what 'merchant' means.",
     ],
-    hintCosts: [{}, {}, { Wisdom: -1 }],
     askParentPrompt: "This is a logic puzzle using elimination. Ask a parent: 'When you have a lot of options and several rules, what's the most efficient way to narrow them down? Is it better to start with the rule that eliminates the most people, or work through them in order?'",
     onSolve: { Wisdom: 2, Cunning: 1 },
     onSkip: { Wisdom: -1 },
@@ -26,6 +24,7 @@ export const chapter3Puzzles = {
     skipFlag: "skippedMessengerPuzzle",
     solveMessage: "Mira nods. 'The craftsman.' She stands up and smooths her dress. 'I knew it. I just needed someone to check my answer.' She looks at you. 'Thank you for coming. My mother worries.'",
     skipMessage: "You and Mira work through it together more slowly. She gets there in the end. 'I could have done this alone,' she says. 'I just wanted someone to try first.'",
+    forceMessage: "Mira watches you try each clue again. 'The craftsman on Poseidon Street,' she says quietly. 'I worked it out while you were thinking.' She's not unkind about it. 'Two heads are still better than one \u2014 even when one of them gets there first.'",
   },
   arenaPuzzle: {
     id: "ch3_puzzle1_arena",
@@ -42,11 +41,9 @@ export const chapter3Puzzles = {
     ],
     correctIndex: 2,
     hints: [
-      "Use Note 1 as your anchor \u2014 'this morning' tells you when it was written relative to the other events.",
-      "Note 2 refers to 'last night' \u2014 which means Note 2 was written the morning after the intrusion. If Note 1 confirmed sandals present 'this morning,' Note 2 came the following morning.",
-      "Order: Note 1 (sandals present, morning 1), Note 2 (intruder was here last night \u2014 written morning 2), Note 3 (sandals now gone \u2014 written after Note 2 was found). The taking happened between morning 1 and morning 2.",
+      "Use Note 1 as your anchor \u2014 'this morning' tells you when it was written. Note 2 refers to 'last night,' which means it was written the morning after the intrusion.",
+      "If Note 1 confirmed sandals present on morning 1, and Note 2 was written on morning 2 (mentioning 'last night'), then the taking happened between those two mornings. Where does Note 3 fit?",
     ],
-    hintCosts: [{}, {}, { Wisdom: -1 }],
     askParentPrompt: "This puzzle is about using time words as anchors to build a timeline. Ask a parent: 'When you hear \"this morning\" or \"last night,\" how do you figure out what those mean if you don't know when something was written? What do you need to know first?'",
     onSolve: { Wisdom: 2, Cunning: 1 },
     onSkip: { Wisdom: -1 },
@@ -54,6 +51,7 @@ export const chapter3Puzzles = {
     skipFlag: "skippedArenaPuzzle",
     solveMessage: "The trainer reads your reconstruction slowly. Then he puts the notes down. 'The morning after the intruder. That means whoever it was didn't take the sandals that same night \u2014 they came back.' That changes things.",
     skipMessage: "You work through it with the trainer together. He gets to the same answer. 'Could have been worse,' he says, not unkindly.",
+    forceMessage: "The trainer arranges the notes himself. 'Note 1, then 2, then 3,' he says. 'The sandals were taken between the first and second morning.' He looks at you. 'Timelines are tricky. You'll get faster at them.'",
   },
   sphinxFinalPuzzle: {
     id: "ch3_puzzle2",
@@ -71,10 +69,8 @@ export const chapter3Puzzles = {
     correctIndex: 1,
     hints: [
       "Asking directly gives you either the truth or a lie \u2014 and you can't tell which. You need a question where truth and lies cancel each other out.",
-      "Think about what happens when the liar reports what the truth-teller would say \u2014 and vice versa. The truth-teller reports the liar's lie accurately. The liar lies about what the truth-teller would say truthfully. Both produce the same wrong answer.",
-      "If both people \u2014 one lying, one truthful \u2014 would give you the same wrong answer to a question, then you just take the opposite of whatever they say. That's the mechanism. The question in Option B is the one that makes this work.",
+      "What if you asked one person what the OTHER person would say? The liar lies about the truth-teller's answer. The truth-teller accurately reports the liar's lie. Both give you the same wrong answer \u2014 so you take the opposite.",
     ],
-    hintCosts: [{}, {}, { Wisdom: -1 }],
     askParentPrompt: "This is one of the most famous logic puzzles ever written \u2014 it's called the Two Guards problem. Ask a parent: 'Can you think of a way to use someone's dishonesty as a tool? Like, is there a situation in real life where knowing someone will always lie actually makes them more useful, not less?' This one is genuinely worth talking through together.",
     onSolve: { Wisdom: 3, Cunning: 2 },
     onSkip: { Wisdom: -1 },
@@ -82,5 +78,6 @@ export const chapter3Puzzles = {
     skipFlag: "skippedSphinxFinal",
     solveMessage: "You fold the papyrus and put it away. You don't know when you'll need this. But you know you will. The Sphinx didn't write this for nothing.",
     skipMessage: "You don't solve it. The question stays with you \u2014 not as a failure, but as something unfinished. It'll come back.",
+    forceMessage: "You stare at the puzzle for a long time. Finally the papyrus rearranges itself one last time: 'Ask either person what the other would say \u2014 then choose the opposite.' You read it three times. It makes sense now, but only because it was explained. Some puzzles teach you more by failing them.",
   },
 };
