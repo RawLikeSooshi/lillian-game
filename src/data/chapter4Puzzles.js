@@ -1,6 +1,6 @@
 /**
  * Chapter 4 Puzzles
- * Sphinx papyrus continues + navigation puzzle during crossing
+ * Navigation puzzle during crossing
  */
 
 export const chapter4Puzzles = {
@@ -8,7 +8,7 @@ export const chapter4Puzzles = {
     id: "ch4_puzzle1",
     tier: 1,
     title: "Reading the Currents",
-    setup: "Before the crossing, the old fisherman (if you chose him) or the harbor master shows you a chart of the strait. 'The currents follow a pattern,' they say. 'If you can read it, you'll know when to cross.'",
+    setup: "Before the crossing — in the grey half-light before dawn, when the harbor is quiet and the strait is just a dark line on the horizon — someone shows you a chart.\n\nThe old fisherman, if you chose him. The harbor master, if you didn't. Either way, the chart is the same: hand-drawn on oilskin, stained with salt, annotated in a cramped hand by someone who crossed the strait enough times to map its moods.\n\n\"The currents follow a pattern,\" they say, tracing the lines with a callused finger. \"Everything in the strait follows a pattern. Find it, and you know when to cross. Miss it, and the strait decides for you.\"",
     question: "The chart shows currents changing direction every hour. The pattern is: East, East, West, East, East, West, East, East...\n\nThe whirlpool (Charybdis) is strongest during West currents. Scylla strikes when the current shifts.\n\nIf you need 2 hours to cross, and you want to avoid BOTH the shift moment AND the West current, when should you start?\n\nThe currents at dawn are: Hour 1 East, Hour 2 East, Hour 3 West, Hour 4 East, Hour 5 East, Hour 6 West...",
     type: "multipleChoice",
     options: [
@@ -27,8 +27,8 @@ export const chapter4Puzzles = {
     onSkip: { Discipline: 1 },
     solveFlag: "solvedNavigationPuzzle",
     skipFlag: "skippedNavigationPuzzle",
-    solveMessage: "The chart makes sense now. You can see the rhythm in the water. The captain looks impressed. 'Most passengers just pray,' they say. 'You planned.' The ship pushes off at dawn — Hour 1. You chose well.",
-    skipMessage: "The chart is confusing. Too many variables. The captain decides for you — dawn departure. 'Trust the captain,' they say. 'That's what we're for.' It's good advice.",
-    forceMessage: "The harbor master traces the pattern for you. 'Start at dawn. Hour 1 and 2 are both East — smooth water, no shift.' You see it now. Patterns are easier when someone points them out. Next time, you'll spot it yourself.",
+    solveMessage: "The pattern clicks into place — East, East, West, repeating like a pulse. You can see the rhythm in the chart now, the way a musician sees rhythm in notes.\n\nThe captain looks at you with different eyes. \"Most passengers just pray,\" they say. \"You planned.\"\n\nThe ship pushes off at dawn. Hour 1. Two hours of East current carrying you through, and by the time the strait shifts to West you'll be on the other side.\n\nYou chose well. The water chose for you once. Now you're choosing back.",
+    skipMessage: "The chart swims in front of your eyes — too many arrows, too many variables, the pattern hiding behind the noise. The captain decides for you.\n\n\"Dawn departure,\" they say, folding the oilskin. \"Trust the captain. That's what we're here for.\"\n\nIt's good advice. Sometimes the wisest thing is knowing who to trust when the answer won't come.",
+    forceMessage: "The harbor master traces the pattern for you, finger moving slowly over the oilskin. \"Hour 1 and Hour 2 — both East. Smooth water, no shift. You cross before the West current wakes up.\"\n\nYou see it now. The pattern was always there — East, East, West, repeating. Simple, once someone draws the line for you.\n\nPatterns are like that. Invisible until you see them, then impossible to unsee.",
   },
 };
