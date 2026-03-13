@@ -9,7 +9,7 @@ export default function QuestForkConfirmScreen({ fork, selectedPath, onConfirm, 
       <div style={{ ...card, textAlign: "center", maxWidth: 500 }}>
         <div style={{ fontSize: 48, marginBottom: 10 }}>{path.icon}</div>
         <h2 style={{ fontSize: 18, color: "#d4a017", margin: "0 0 12px" }}>{path.label}</h2>
-        <p style={{ fontSize: 14, color: "#c8b88a", lineHeight: 1.85, marginBottom: 14 }}>
+        <p style={{ fontSize: 16, color: "#c8b88a", lineHeight: 1.85, marginBottom: 14 }}>
           {path.description}
         </p>
         <div style={{
@@ -18,7 +18,7 @@ export default function QuestForkConfirmScreen({ fork, selectedPath, onConfirm, 
           padding: "12px 14px",
           marginBottom: 16,
         }}>
-          <p style={{ fontSize: 13, color: "#d4a017", margin: 0, fontStyle: "italic" }}>
+          <p style={{ fontSize: 16, color: "#d4a017", margin: 0, fontStyle: "italic" }}>
             Are you sure? "{otherPath.label}" will remain untraveled.
           </p>
         </div>
@@ -31,8 +31,8 @@ export default function QuestForkConfirmScreen({ fork, selectedPath, onConfirm, 
           borderRadius: 7,
           padding: "10px 16px",
           color: "#d4a017",
-          fontSize: 13,
-          fontFamily: "Georgia,serif",
+          fontSize: 16,
+          fontFamily: "'Cormorant Garamond', Georgia, serif",
           cursor: "pointer",
           width: "100%",
         }}>

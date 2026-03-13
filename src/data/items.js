@@ -41,6 +41,48 @@ export const ALL_ITEMS = {
     description: "A silver feather that appeared at the oracle's door.",
     source: "Ch1 Puzzle 2",
   },
+  tridentShard: {
+    id: "tridentShard",
+    name: "Trident Shard",
+    icon: "🔱",
+    description: "A fragment of a divine trident. Warm to the touch, humming with sea-power.",
+    source: "Ch4 Sea Cave",
+  },
+  goldenApple: {
+    id: "goldenApple",
+    name: "Golden Apple",
+    icon: "🍎",
+    description: "A golden apple from the Garden of the Hesperides. It glows faintly.",
+    source: "Ch5 Garden",
+  },
+  styxWater: {
+    id: "styxWater",
+    name: "Water of the Styx",
+    icon: "💧",
+    description: "A vial of water from the River Styx. Cold beyond cold.",
+    source: "Ch6 Underworld",
+  },
+  forgedWeapon: {
+    id: "forgedWeapon",
+    name: "Forged Weapon",
+    icon: "⚒️",
+    description: "A weapon forged by Hephaestus himself, shaped by your dominant trait.",
+    source: "Ch7 Forge",
+  },
+  ariadnesThread: {
+    id: "ariadnesThread",
+    name: "Ariadne's Thread",
+    icon: "🧶",
+    description: "A thread that always leads to the exit. Given by Ariadne at the labyrinth.",
+    source: "Ch8 Labyrinth",
+  },
+  athenaShield: {
+    id: "athenaShield",
+    name: "Athena's Shield",
+    icon: "🛡️",
+    description: "A shield blessed by Athena. It reflects more than blows.",
+    source: "Ch9 Athens",
+  },
 };
 
 export const INITIAL_INVENTORY = [];

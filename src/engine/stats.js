@@ -1,10 +1,19 @@
 /**
+ * STAT RANGE: 0-20 (start at 3, cap at 20)
+ * Power thresholds at 8 / 13 / 17
+ *
  * COURAGE GAIN GUIDELINES
  * +2 Courage for public, visible acts of standing up (confrontation, speaking out)
  * +1 Courage for quiet/internal bravery (private resolve, staying calm under pressure)
  * Quiet courage may also track via flags (e.g. actedPublicly_ch1) rather than large stat bumps
  */
 export const INITIAL_STATS = { Courage: 3, Wisdom: 3, Discipline: 3, Empathy: 3, Cunning: 3 };
+
+/**
+ * Convert a stat value (0-20) to a D20 modifier.
+ * Re-exported from dice.js for convenience.
+ */
+export { getStatModifier } from "./dice.js";
 export const STAT_COLORS = { Courage: "#e85d3a", Wisdom: "#6b8fd4", Discipline: "#8b6db5", Empathy: "#4caf8a", Cunning: "#d4a017" };
 export const STAT_ICONS = { Courage: "⚔️", Wisdom: "📜", Discipline: "🏛️", Empathy: "🫶", Cunning: "🦊" };
 

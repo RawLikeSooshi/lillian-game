@@ -57,8 +57,8 @@ export default function DiscussionGuide({ flags, stats, chapter }) {
           borderRadius: 8,
           padding: "10px 16px",
           color: "#d4a017",
-          fontSize: 12,
-          fontFamily: "Georgia,serif",
+          fontSize: 16,
+          fontFamily: "'Cormorant Garamond', Georgia, serif",
           cursor: "pointer",
           width: "100%",
           textAlign: "left",
@@ -74,17 +74,17 @@ export default function DiscussionGuide({ flags, stats, chapter }) {
           borderRadius: 12,
           padding: "18px 20px",
           color: "#3a3020",
-          fontFamily: "Georgia,serif",
+          fontFamily: "'Cormorant Garamond', Georgia, serif",
         }}>
-          <h4 style={{ fontSize: 14, color: "#5a4a30", marginBottom: 6, fontWeight: "normal", fontStyle: "italic" }}>
+          <h4 style={{ fontSize: 16, color: "#5a4a30", marginBottom: 6, fontWeight: "normal", fontStyle: "italic" }}>
             A few questions worth talking about
           </h4>
-          <p style={{ fontSize: 11, color: "#8a7a60", fontStyle: "italic", margin: "0 0 14px" }}>
+          <p style={{ fontSize: 13, color: "#8a7a60", fontStyle: "italic", margin: "0 0 14px" }}>
             These questions have no right answers. They're just good ones.
           </p>
           <ul style={{ paddingLeft: 18, margin: 0 }}>
             {questions.map((q, i) => (
-              <li key={i} style={{ marginBottom: 10, lineHeight: 1.75, fontSize: 13, color: "#4a3a20" }}>
+              <li key={i} style={{ marginBottom: 10, lineHeight: 1.75, fontSize: 16, color: "#4a3a20" }}>
                 {q}
               </li>
             ))}

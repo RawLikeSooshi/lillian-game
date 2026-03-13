@@ -24,7 +24,7 @@ export default function PuzzleResultScreen({ puzzle, puzzleState, stats, invento
       </div>
 
       <div style={puzzleCard}>
-        <h3 style={{ color: "#6b8fd4", marginBottom: 10, fontSize: 12, fontVariant: "small-caps", letterSpacing: 1 }}>
+        <h3 style={{ color: "#6b8fd4", marginBottom: 10, fontSize: 13, fontVariant: "small-caps", letterSpacing: 1 }}>
           {puzzle.title} — {statusLabel}
         </h3>
 
@@ -35,7 +35,7 @@ export default function PuzzleResultScreen({ puzzle, puzzleState, stats, invento
           padding: 13,
           marginBottom: 12,
         }}>
-          <p style={{ lineHeight: 1.85, color: "#c8b88a", margin: 0, fontStyle: "italic", fontSize: 14 }}>
+          <p style={{ lineHeight: 1.85, color: "#c8b88a", margin: 0, fontStyle: "italic", fontSize: 16 }}>
             {message}
           </p>
         </div>
@@ -47,7 +47,7 @@ export default function PuzzleResultScreen({ puzzle, puzzleState, stats, invento
               border: `1px solid ${v > 0 ? "rgba(76,175,138,0.36)" : "rgba(232,93,58,0.36)"}`,
               borderRadius: 5,
               padding: "3px 8px",
-              fontSize: 11,
+              fontSize: 13,
               color: v > 0 ? "#4caf8a" : "#e85d3a",
             }}>
               {STAT_ICONS[s]} {s} {v > 0 ? `+${v}` : v}

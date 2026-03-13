@@ -8,7 +8,7 @@ export default function NameScreen({ nameInput, onNameChange, onSubmitName }) {
       <div style={{ ...card, textAlign: "center", marginTop: 54 }}>
         <div style={{ fontSize: 44, marginBottom: 8 }}>⚡</div>
         <h2 style={{ fontSize: 20, color: "#d4a017", marginBottom: 8 }}>Who are you, young hero?</h2>
-        <p style={{ color: "#a08060", marginBottom: 18, lineHeight: 1.8, fontSize: 14 }}>Every hero has a name.<br/>Yours will be remembered in the halls of Olympus.</p>
+        <p style={{ color: "#a08060", marginBottom: 18, lineHeight: 1.8, fontSize: 16 }}>Every hero has a name.<br/>Yours will be remembered in the halls of Olympus.</p>
         <input
           value={nameInput}
           onChange={(e) => onNameChange(e.target.value)}
@@ -21,7 +21,7 @@ export default function NameScreen({ nameInput, onNameChange, onSubmitName }) {
             padding: "11px 14px",
             fontSize: 17,
             color: "#e8d8b0",
-            fontFamily: "Georgia,serif",
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
             textAlign: "center",
             width: "100%",
             boxSizing: "border-box",

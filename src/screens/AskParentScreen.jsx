@@ -4,7 +4,7 @@ export default function AskParentScreen({ puzzle, onBack }) {
   return (
     <div style={bg}>
       <div style={{ ...parentCard, maxWidth: 660, width: "100%", boxSizing: "border-box", textAlign: "center" }}>
-        <p style={{ fontSize: 10, color: "#8a7a60", letterSpacing: 2, fontVariant: "small-caps", marginBottom: 8 }}>
+        <p style={{ fontSize: 12, color: "#8a7a60", letterSpacing: 2, fontVariant: "small-caps", marginBottom: 8 }}>
           Ask Someone You Trust
         </p>
         <h2 style={{ fontSize: 18, color: "#3a3020", margin: "0 0 14px" }}>{puzzle.title}</h2>
@@ -15,11 +15,11 @@ export default function AskParentScreen({ puzzle, onBack }) {
           marginBottom: 14,
           textAlign: "left",
         }}>
-          <p style={{ lineHeight: 1.85, color: "#3a3020", margin: 0, fontSize: 14 }}>
+          <p style={{ lineHeight: 1.85, color: "#3a3020", margin: 0, fontSize: 16 }}>
             {puzzle.askParentPrompt}
           </p>
         </div>
-        <p style={{ fontSize: 12, color: "#8a7a60", lineHeight: 1.8, marginBottom: 16 }}>
+        <p style={{ fontSize: 16, color: "#8a7a60", lineHeight: 1.8, marginBottom: 16 }}>
           Talk it through together. There's no timer and no penalty for being here. When you're ready, go back to the puzzle.
         </p>
         <button onClick={onBack} style={{

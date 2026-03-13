@@ -13,7 +13,7 @@ export default function PuzzleScreen({ heroName, puzzle, puzzleState, stats, inv
       <div style={{ ...puzzleCard, marginBottom: 10, padding: "11px 16px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 7 }}>
           <span style={{ color: "#6b8fd4", fontSize: 12, fontVariant: "small-caps" }}>{"\u{1F9E9}"} {heroName}</span>
-          <span style={{ color: "#a08060", fontSize: 10 }}>Chapter {chapter} — Puzzle</span>
+          <span style={{ color: "#a08060", fontSize: 12 }}>Chapter {chapter} — Puzzle</span>
         </div>
         {inventory.length > 0 && <InventoryBar inventory={inventory} />}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
@@ -24,12 +24,12 @@ export default function PuzzleScreen({ heroName, puzzle, puzzleState, stats, inv
       <div style={puzzleCard}>
         <h2 style={{ fontSize: 17, color: "#6b8fd4", margin: "0 0 10px" }}>{puzzle.title}</h2>
         <div style={{ background: "rgba(107,143,212,0.08)", borderRadius: 9, padding: 13, marginBottom: 12 }}>
-          <p style={{ lineHeight: 1.85, color: "#c8b88a", margin: 0, fontStyle: "italic", fontSize: 14 }}>{puzzle.setup}</p>
+          <p style={{ lineHeight: 1.85, color: "#c8b88a", margin: 0, fontStyle: "italic", fontSize: 16 }}>{puzzle.setup}</p>
         </div>
 
         <div style={{ borderLeft: "2px solid rgba(107,143,212,0.3)", paddingLeft: 12, marginBottom: 14 }}>
           {puzzle.question.split("\n").map((l, i) => (
-            <p key={i} style={{ margin: "0 0 8px", lineHeight: 1.85, color: "#e8d8b0", fontSize: 14 }}>{l}</p>
+            <p key={i} style={{ margin: "0 0 8px", lineHeight: 1.85, color: "#e8d8b0", fontSize: 16 }}>{l}</p>
           ))}
         </div>
 
@@ -43,7 +43,7 @@ export default function PuzzleScreen({ heroName, puzzle, puzzleState, stats, inv
             marginBottom: 10,
             textAlign: "center",
           }}>
-            <p style={{ margin: 0, fontSize: 12, color: "#e8a060", fontStyle: "italic" }}>
+            <p style={{ margin: 0, fontSize: 16, color: "#e8a060", fontStyle: "italic" }}>
               Not quite right. Here's something to help you think about it...
             </p>
           </div>
@@ -58,7 +58,7 @@ export default function PuzzleScreen({ heroName, puzzle, puzzleState, stats, inv
             marginBottom: 10,
             textAlign: "center",
           }}>
-            <p style={{ margin: 0, fontSize: 12, color: "#e8a060", fontStyle: "italic" }}>
+            <p style={{ margin: 0, fontSize: 16, color: "#e8a060", fontStyle: "italic" }}>
               This is a tough one. Give it one more try — or you can move on.
             </p>
           </div>
@@ -75,15 +75,15 @@ export default function PuzzleScreen({ heroName, puzzle, puzzleState, stats, inv
                 padding: "8px 12px",
                 marginBottom: 6,
               }}>
-                <span style={{ color: "#6b8fd4", fontSize: 10, fontVariant: "small-caps" }}>Hint {i + 1}</span>
-                <p style={{ margin: "4px 0 0", color: "#c8b88a", fontSize: 13, lineHeight: 1.7 }}>{hint}</p>
+                <span style={{ color: "#6b8fd4", fontSize: 12, fontVariant: "small-caps" }}>Hint {i + 1}</span>
+                <p style={{ margin: "4px 0 0", color: "#c8b88a", fontSize: 16, lineHeight: 1.7 }}>{hint}</p>
               </div>
             ))}
           </div>
         )}
 
         {/* Answer options */}
-        <p style={{ fontSize: 10, color: "#6b8fd4", marginBottom: 8, fontVariant: "small-caps", letterSpacing: 1 }}>Choose your answer</p>
+        <p style={{ fontSize: 12, color: "#6b8fd4", marginBottom: 8, fontVariant: "small-caps", letterSpacing: 1 }}>Choose your answer</p>
         <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 12 }}>
           {puzzle.options.map((opt, i) => (
             <button
@@ -95,8 +95,8 @@ export default function PuzzleScreen({ heroName, puzzle, puzzleState, stats, inv
                 borderRadius: 9,
                 padding: "11px 13px",
                 color: "#e8d8b0",
-                fontSize: 13,
-                fontFamily: "Georgia,serif",
+                fontSize: 16,
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
                 textAlign: "left",
                 cursor: "pointer",
                 lineHeight: 1.65,
@@ -117,8 +117,8 @@ export default function PuzzleScreen({ heroName, puzzle, puzzleState, stats, inv
               borderRadius: 7,
               padding: "8px 14px",
               color: "#e0d8c0",
-              fontSize: 12,
-              fontFamily: "Georgia,serif",
+              fontSize: 16,
+              fontFamily: "'Cormorant Garamond', Georgia, serif",
               cursor: "pointer",
             }}>
               Ask a Parent
@@ -130,8 +130,8 @@ export default function PuzzleScreen({ heroName, puzzle, puzzleState, stats, inv
             borderRadius: 7,
             padding: "8px 14px",
             color: "#a08060",
-            fontSize: 12,
-            fontFamily: "Georgia,serif",
+            fontSize: 16,
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
             cursor: "pointer",
           }}>
             Skip This Puzzle

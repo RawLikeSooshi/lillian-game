@@ -4,9 +4,135 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hero of Olympus</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
     <style>
       *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
       body { background: #1a1008; }
+
+      /* ── Animations ── */
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(12px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes fadeInSlow {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @keyframes slideInLeft {
+        from { opacity: 0; transform: translateX(-16px); }
+        to { opacity: 1; transform: translateX(0); }
+      }
+      @keyframes glowPulse {
+        0%, 100% { box-shadow: 0 0 8px rgba(212,160,23,0.15); }
+        50% { box-shadow: 0 0 20px rgba(212,160,23,0.3); }
+      }
+      @keyframes breathe {
+        0%, 100% { opacity: 0.6; }
+        50% { opacity: 1; }
+      }
+
+      .fade-in { animation: fadeIn 0.6s ease both; }
+      .fade-in-up { animation: fadeInUp 0.5s ease both; }
+      .fade-in-slow { animation: fadeInSlow 1.2s ease both; }
+      .slide-in-left { animation: slideInLeft 0.4s ease both; }
+      .glow-pulse { animation: glowPulse 3s ease-in-out infinite; }
+      .breathe { animation: breathe 4s ease-in-out infinite; }
+
+      /* Staggered fade-in for children */
+      .stagger > * { animation: fadeInUp 0.5s ease both; }
+      .stagger > *:nth-child(1) { animation-delay: 0.05s; }
+      .stagger > *:nth-child(2) { animation-delay: 0.12s; }
+      .stagger > *:nth-child(3) { animation-delay: 0.19s; }
+      .stagger > *:nth-child(4) { animation-delay: 0.26s; }
+      .stagger > *:nth-child(5) { animation-delay: 0.33s; }
+      .stagger > *:nth-child(6) { animation-delay: 0.40s; }
+
+      /* Chapter color themes via CSS variables */
+      :root {
+        --ch-accent: #d4a017;
+        --ch-accent-rgb: 212,160,23;
+        --ch-bg-from: #1a1008;
+        --ch-bg-via: #2a1f0a;
+        --ch-bg-to: #1a0f15;
+        --ch-glow: rgba(212,160,23,0.15);
+      }
+
+      [data-chapter="1"] {
+        --ch-accent: #d4a017;
+        --ch-accent-rgb: 212,160,23;
+        --ch-bg-from: #1a1008;
+        --ch-bg-via: #2a1f0a;
+        --ch-bg-to: #1a0f15;
+      }
+      [data-chapter="2"] {
+        --ch-accent: #c49a2e;
+        --ch-accent-rgb: 196,154,46;
+        --ch-bg-from: #15100a;
+        --ch-bg-via: #251c0e;
+        --ch-bg-to: #1a1210;
+      }
+      [data-chapter="3"] {
+        --ch-accent: #c8884a;
+        --ch-accent-rgb: 200,136,74;
+        --ch-bg-from: #18100c;
+        --ch-bg-via: #281a0e;
+        --ch-bg-to: #1c1210;
+      }
+      [data-chapter="4"] {
+        --ch-accent: #5a9ab5;
+        --ch-accent-rgb: 90,154,181;
+        --ch-bg-from: #0a1018;
+        --ch-bg-via: #0e1a2a;
+        --ch-bg-to: #0a1520;
+      }
+      [data-chapter="5"] {
+        --ch-accent: #7ab55a;
+        --ch-accent-rgb: 122,181,90;
+        --ch-bg-from: #0c140a;
+        --ch-bg-via: #142210;
+        --ch-bg-to: #0a1808;
+      }
+      [data-chapter="6"] {
+        --ch-accent: #8a7ab5;
+        --ch-accent-rgb: 138,122,181;
+        --ch-bg-from: #100a18;
+        --ch-bg-via: #180e28;
+        --ch-bg-to: #12081a;
+      }
+      [data-chapter="7"] {
+        --ch-accent: #d4703a;
+        --ch-accent-rgb: 212,112,58;
+        --ch-bg-from: #1a0e08;
+        --ch-bg-via: #2a1408;
+        --ch-bg-to: #1c0c0a;
+      }
+      [data-chapter="8"] {
+        --ch-accent: #a08860;
+        --ch-accent-rgb: 160,136,96;
+        --ch-bg-from: #14100a;
+        --ch-bg-via: #221a0e;
+        --ch-bg-to: #181210;
+      }
+      [data-chapter="9"] {
+        --ch-accent: #b54a4a;
+        --ch-accent-rgb: 181,74,74;
+        --ch-bg-from: #180a0a;
+        --ch-bg-via: #280e0e;
+        --ch-bg-to: #1a0808;
+      }
+      [data-chapter="10"] {
+        --ch-accent: #e8c84a;
+        --ch-accent-rgb: 232,200,74;
+        --ch-bg-from: #141018;
+        --ch-bg-via: #1e1828;
+        --ch-bg-to: #0c0a18;
+      }
     </style>
   </head>
   <body>

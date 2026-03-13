@@ -44,8 +44,8 @@ export default function InventoryBar({ inventory }) {
                 whiteSpace: "nowrap",
                 zIndex: 10,
                 color: "#e8d8b0",
-                fontSize: 11,
-                fontFamily: "Georgia,serif",
+                fontSize: 16,
+                fontFamily: "'Cormorant Garamond', Georgia, serif",
                 textAlign: "center",
               }}>
                 <div style={{ color: "#d4a017", fontWeight: "bold", marginBottom: 3 }}>{item.name}</div>
