@@ -4,6 +4,8 @@ import DiscussionGuide from "../components/DiscussionGuide";
 import ReputationBadge from "../components/ReputationBadge";
 import OathBadge from "../components/OathBadge";
 import NemesisBanner from "../components/NemesisBanner";
+import JourneyMap from "../components/JourneyMap";
+import HeroPortrait from "../components/HeroPortrait";
 import { INITIAL_STATS } from "../engine/stats";
 import { ECHO_REVELATIONS } from "../engine/memoryEcho";
 import { bg, card, goldBtn, prophecyCard } from "../styles";
@@ -36,6 +38,9 @@ export default function ChapterEndScreen({
   if (chapter === 1) {
     return (
       <div style={bg}>
+        <div className="fade-in" style={{ marginBottom: 12, maxWidth: 660, width: "100%" }}>
+          <JourneyMap currentChapter={chapter} chapterEndStats={chapterEndStats} />
+        </div>
         <div style={{ ...card, textAlign: "center", marginBottom: 10 }}>
           <div style={{ fontSize: 50, marginBottom: 6 }}>{identity.symbol}</div>
           <p style={{ fontSize: 12, color: "#a08060", letterSpacing: 3, fontVariant: "small-caps", marginBottom: 3 }}>The Oracle Sees You As</p>
@@ -67,6 +72,9 @@ export default function ChapterEndScreen({
   if (chapter === 2) {
     return (
       <div style={bg}>
+        <div className="fade-in" style={{ marginBottom: 12, maxWidth: 660, width: "100%" }}>
+          <JourneyMap currentChapter={chapter} chapterEndStats={chapterEndStats} />
+        </div>
         <div style={{ ...card, textAlign: "center", marginBottom: 10 }}>
           <div style={{ fontSize: 50, marginBottom: 6 }}>{figure.symbol}</div>
           <div style={{ borderLeft: "2px solid rgba(212,160,23,0.3)", paddingLeft: 12, marginBottom: 14, textAlign: "left" }}>
@@ -107,6 +115,9 @@ export default function ChapterEndScreen({
     const pathLabel = flags.messengerPath_chosen ? "the messenger's path" : "the arena's path";
     return (
       <div style={bg}>
+        <div className="fade-in" style={{ marginBottom: 12, maxWidth: 660, width: "100%" }}>
+          <JourneyMap currentChapter={chapter} chapterEndStats={chapterEndStats} />
+        </div>
         <div style={{ ...card, textAlign: "center", marginBottom: 10 }}>
           <div style={{ borderLeft: "2px solid rgba(212,160,23,0.3)", paddingLeft: 12, textAlign: "left" }}>
             <p style={{ lineHeight: 1.9, color: "#c8b88a", margin: 0, fontStyle: "italic", fontSize: 16 }}>
@@ -147,6 +158,11 @@ export default function ChapterEndScreen({
   // ── Generic Chapter End (4-10) ──
   return (
     <div style={bg}>
+      {/* Journey Map */}
+      <div className="fade-in" style={{ marginBottom: 12, maxWidth: 660, width: "100%" }}>
+        <JourneyMap currentChapter={chapter} chapterEndStats={chapterEndStats} />
+      </div>
+
       {/* Narrative coda */}
       <div style={{ ...card, textAlign: "center", marginBottom: 10 }}>
         <div style={{ fontSize: 13, color: "#706050", letterSpacing: 2, textTransform: "uppercase", marginBottom: 8 }}>
@@ -163,15 +179,8 @@ export default function ChapterEndScreen({
       </div>
 
       {/* Hero Portrait */}
-      <div style={{ ...card, textAlign: "center", marginBottom: 10 }}>
-        <div style={{ fontSize: 44, marginBottom: 6 }}>{identity.symbol}</div>
-        <p style={{ fontSize: 12, color: "#a08060", letterSpacing: 3, fontVariant: "small-caps", marginBottom: 3 }}>
-          The Oracle Now Sees You As
-        </p>
-        <h2 style={{ fontSize: 22, color: "#d4a017", margin: "0 0 10px" }}>{identity.title}</h2>
-        <div style={{ background: "rgba(212,160,23,0.08)", borderRadius: 11, padding: "12px 14px" }}>
-          <p style={{ lineHeight: 1.9, color: "#c8b88a", margin: 0, fontSize: 16 }}>{identity.desc}</p>
-        </div>
+      <div className="fade-in-up" style={{ marginBottom: 10, maxWidth: 660, width: "100%" }}>
+        <HeroPortrait identity={identity} heroName={heroName} stats={stats} chapter={chapter} />
       </div>
 
       {/* Stats & Systems */}

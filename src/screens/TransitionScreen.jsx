@@ -2,16 +2,24 @@ import StatBar from "../components/StatBar";
 import InventoryBar from "../components/InventoryBar";
 import WorldTicker from "../components/WorldTicker";
 import OathBadge from "../components/OathBadge";
+import SceneAtmosphere from "../components/SceneAtmosphere";
 import { bg, transitionCard, goldBtn } from "../styles";
+
+const CHAPTER_MOODS = {
+  1: "road", 2: "road", 3: "road", 4: "sea", 5: "garden",
+  6: "underworld", 7: "forge", 8: "labyrinth", 9: "battle", 10: "olympus",
+};
 
 export default function TransitionScreen({
   heroName, transitionText, inventory, stats, chapter, onContinue,
   tickerMessages = [], oaths = [],
 }) {
   const activeOaths = oaths.filter(o => !o.broken);
+  const mood = CHAPTER_MOODS[chapter] || "default";
 
   return (
-    <div style={bg}>
+    <div style={{ ...bg, position: "relative" }}>
+      <SceneAtmosphere mood={mood} chapter={chapter} />
       <div className="fade-in" style={{ ...transitionCard, marginBottom: 10, padding: "11px 16px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 7 }}>
           <span style={{ color: "var(--ch-accent)", fontSize: 12, fontVariant: "small-caps" }}>⚡ {heroName}</span>

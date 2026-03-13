@@ -1,11 +1,19 @@
 import StatBar from "../components/StatBar";
 import ChoiceButton from "../components/ChoiceButton";
 import InventoryBar from "../components/InventoryBar";
+import SceneAtmosphere from "../components/SceneAtmosphere";
 import { bg, card } from "../styles";
 
+const CHAPTER_MOODS = {
+  1: "road", 2: "road", 3: "road", 4: "sea", 5: "garden",
+  6: "underworld", 7: "forge", 8: "labyrinth", 9: "battle", 10: "olympus",
+};
+
 export default function SceneScreen({ heroName, scene, sceneIndex, totalScenes, stats, inventory, flags, onChoice, chapter }) {
+  const mood = CHAPTER_MOODS[chapter] || "default";
   return (
-    <div style={bg}>
+    <div style={{ ...bg, position: "relative" }}>
+      <SceneAtmosphere mood={mood} chapter={chapter} />
       <div className="fade-in" style={{ ...card, marginBottom: 10, padding: "11px 16px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 7 }}>
           <span style={{ color: "var(--ch-accent)", fontSize: 13, fontVariant: "small-caps" }}>⚡ {heroName}</span>

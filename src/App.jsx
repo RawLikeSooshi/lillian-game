@@ -48,7 +48,9 @@ import SacrificeScreen from "./screens/SacrificeScreen";
 import PowerUnlockScreen from "./screens/PowerUnlockScreen";
 import OathSwearScreen from "./screens/OathSwearScreen";
 import PrologueScreen from "./screens/PrologueScreen";
+import ChapterTitleScreen from "./screens/ChapterTitleScreen";
 import prologue from "./data/prologue";
+import { CHAPTER_THEMES } from "./styles";
 
 const SAVE_KEY = "hero-of-olympus-save";
 const SAVE_VERSION = 2;
@@ -129,7 +131,7 @@ export default function App() {
   // ── Auto-save ──
   useEffect(() => {
     const cleanPhases = ["scene", "transition", "puzzle", "questFork", "end",
-      "encounter", "exploration", "dialogueDuel", "memoryEcho", "dream", "prophecyDraw"];
+      "encounter", "exploration", "dialogueDuel", "memoryEcho", "dream", "prophecyDraw", "chapterTitle"];
     if (cleanPhases.includes(phase) && heroName) {
       const save = {
         version: SAVE_VERSION,
@@ -567,9 +569,8 @@ export default function App() {
     // Initialize nemesis if not yet created (Ch2+)
     if (!nemesis && nextChapter >= 2) setNemesis(generateNemesis(stats));
 
-    // Start with prophecy draw if the chapter has prophecy data
-    // For now, go to first step's phase
-    setPhase("scene");
+    // Show chapter title card before starting the chapter
+    setPhase("chapterTitle");
   }, [chapter, stats, nemesis]);
 
   // ── Full reset ──
@@ -688,7 +689,19 @@ export default function App() {
     return (
       <PrologueScreen
         pages={prologue.pages}
-        onComplete={() => setPhase("scene")}
+        onComplete={() => setPhase("chapterTitle")}
+      />
+    );
+  }
+
+  // ── Chapter Title Card ──
+  if (phase === "chapterTitle") {
+    const chTitle = CHAPTER_THEMES[chapter]?.name || `Chapter ${chapter}`;
+    return (
+      <ChapterTitleScreen
+        chapter={chapter}
+        title={chTitle}
+        onContinue={() => setPhaseForStep(flow[0])}
       />
     );
   }
