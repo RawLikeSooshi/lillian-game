@@ -25,7 +25,7 @@ export const ch3EncounterWarehouse = {
   choices: [
     {
       prompt: "Two men. One door. They see you coming. Neither moves aside.",
-      timer: 10,
+      timer: 15,
       options: [
         { text: "Tell them you're here for the girl. Make it clear you're not leaving.", stat: "Courage", statChanges: { Courage: 1 } },
         { text: "Act like a delivery runner. Walk like you belong.", stat: "Cunning", statChanges: { Cunning: 1 } },
@@ -34,7 +34,7 @@ export const ch3EncounterWarehouse = {
     },
     {
       prompt: "A hand grabs your arm. Rough grip. 'Kid, you don't want to be here.'",
-      timer: 10,
+      timer: 15,
       options: [
         { text: "Twist free. Push past. Speed matters now.", stat: "Discipline", statChanges: { Discipline: 1 } },
         { text: "Shout Mira's name. Let her know someone came.", stat: "Courage", statChanges: { Courage: 1 } },
@@ -43,7 +43,7 @@ export const ch3EncounterWarehouse = {
     },
     {
       prompt: "You're inside. Dark. Crates stacked high. Footsteps behind you. Mira is somewhere in the back.",
-      timer: 10,
+      timer: 15,
       options: [
         { text: "Knock a shelf across the aisle. Block him. Buy time.", stat: "Cunning", statChanges: { Cunning: 1 } },
         { text: "Turn and face him. You're done running.", stat: "Courage", statChanges: { Courage: 1 } },
@@ -88,7 +88,7 @@ export const ch3EncounterSaboteur = {
   choices: [
     {
       prompt: "Theron sees you. His face shuts like a door. 'I don't know what you're talking about.'",
-      timer: 10,
+      timer: 15,
       options: [
         { text: "Block his path. You're not done.", stat: "Courage", statChanges: { Courage: 1 } },
         { text: "Show him the evidence. Let the facts do it.", stat: "Wisdom", statChanges: { Wisdom: 1 } },
@@ -97,7 +97,7 @@ export const ch3EncounterSaboteur = {
     },
     {
       prompt: "Theron turns aggressive. Steps toward you. 'You're an outsider. This isn't your business.'",
-      timer: 10,
+      timer: 15,
       options: [
         { text: "Stay calm. His anger is proof, not a threat.", stat: "Discipline", statChanges: { Discipline: 1 } },
         { text: "Match him. 'Sabotage isn't sport. That's everyone's business.'", stat: "Courage", statChanges: { Courage: 1 } },
@@ -106,7 +106,7 @@ export const ch3EncounterSaboteur = {
     },
     {
       prompt: "Theron is cornered. Eyes darting. Deciding whether to run or talk.",
-      timer: 10,
+      timer: 15,
       options: [
         { text: "Give him a way out. 'Return the sandals. Nobody has to know.'", stat: "Empathy", statChanges: { Empathy: 1 } },
         { text: "Block the exit. This gets resolved here.", stat: "Discipline", statChanges: { Discipline: 1 } },

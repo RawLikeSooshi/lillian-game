@@ -38,7 +38,7 @@ export const ch7EncounterTest = {
   choices: [
     {
       prompt: "The automaton lunges — a straight punch aimed at your center. Mechanical. Precise. Faster than bronze should move.",
-      timer: 10,
+      timer: 15,
       options: [
         { text: "Sidestep and counter. Speed beats power.", stat: "Courage", statChanges: { Courage: 1 } },
         { text: "Brace and deflect. Let the force pass through you.", stat: "Discipline", statChanges: { Discipline: 1 } },
@@ -47,7 +47,7 @@ export const ch7EncounterTest = {
     },
     {
       prompt: "The automaton reconfigures — arms splitting, reforming, spinning. The air hums with moving bronze.",
-      timer: 10,
+      timer: 15,
       options: [
         { text: "Go low. Strike at its legs. Destabilize.", stat: "Cunning", statChanges: { Cunning: 1 } },
         { text: "Hold. Wait for the pattern to show its gap.", stat: "Discipline", statChanges: { Discipline: 1 } },
@@ -56,7 +56,7 @@ export const ch7EncounterTest = {
     },
     {
       prompt: "The automaton staggers — but recovers. Its eyes flicker. It's learning your moves. The next attack will be different.",
-      timer: 10,
+      timer: 15,
       options: [
         { text: "Change everything. Do what it doesn't expect.", stat: "Cunning", statChanges: { Cunning: 1 } },
         { text: "Press now. Before it adapts.", stat: "Courage", statChanges: { Courage: 1 } },

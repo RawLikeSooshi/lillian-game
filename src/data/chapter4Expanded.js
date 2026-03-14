@@ -37,7 +37,7 @@ export const ch4EncounterScylla = {
   choices: [
     {
       prompt: "The first head strikes — snaking down at a sailor coiling rope on the starboard side. Fast. So fast.",
-      timer: 10,
+      timer: 15,
       options: [
         { text: "Shove the sailor clear!", stat: "Courage", statChanges: { Courage: 1 } },
         { text: "Hurl cargo at the head — distract it!", stat: "Cunning", statChanges: { Cunning: 1 } },
@@ -46,7 +46,7 @@ export const ch4EncounterScylla = {
     },
     {
       prompt: "Two heads at once. Port and starboard. The ship rocks like a toy in a bathtub. Someone is screaming.",
-      timer: 10,
+      timer: 15,
       options: [
         { text: "Focus on the nearest head. Save who you can reach.", stat: "Discipline", statChanges: { Discipline: 1 } },
         { text: "Grab a torch from the fire pit. Swing it. Fire. Now.", stat: "Wisdom", statChanges: { Wisdom: 1 } },
@@ -55,7 +55,7 @@ export const ch4EncounterScylla = {
     },
     {
       prompt: "A head wraps around the mast. The wood groans. The whole ship tilts. Seconds.",
-      timer: 10,
+      timer: 15,
       options: [
         { text: "Cut the cargo net rope — the weight will fall on the head.", stat: "Cunning", statChanges: { Cunning: 1 } },
         { text: "Climb the mast. Strike at the grip. Up close.", stat: "Courage", statChanges: { Courage: 1 } },

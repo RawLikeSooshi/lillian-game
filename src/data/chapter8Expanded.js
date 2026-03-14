@@ -47,7 +47,7 @@ export const ch8EncounterMinotaur = {
     },
     {
       prompt: "He charges — not to kill, but to test. Horns lowered, thundering across the garden. The ground cracks beneath his hooves.",
-      timer: 10,
+      timer: 15,
       options: [
         { text: "Sidestep at the last second. Use his momentum against him.", stat: "Cunning", statChanges: { Cunning: 1 } },
         { text: "Brace and catch his horns. Meet strength with strength.", stat: "Courage", statChanges: { Courage: 1 } },

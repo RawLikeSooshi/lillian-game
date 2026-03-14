@@ -47,7 +47,7 @@ export const ch9EncounterBattle = {
     },
     {
       prompt: "Ares' warriors reform. Tighter. Faster. They're adapting to your tactics. The second wave is smarter than the first.",
-      timer: 10,
+      timer: 15,
       options: [
         { text: "Adapt back. Change the formation. Be unpredictable.", stat: "Cunning", statChanges: { Cunning: 1 } },
         { text: "Hold. Don't react. Let them waste energy on a wall that won't move.", stat: "Discipline", statChanges: { Discipline: 1 } },
@@ -56,7 +56,7 @@ export const ch9EncounterBattle = {
     },
     {
       prompt: "The eastern gate erupts. A second wave — flanking. The defenders can't hold both walls. You're being split.",
-      timer: 10,
+      timer: 15,
       options: [
         { text: "Split forces. Trust the eastern commander. Hold the north yourself.", stat: "Wisdom", statChanges: { Wisdom: 1 } },
         { text: "Collapse the eastern tunnel. Sacrifice the gate to save the city.", stat: "Discipline", statChanges: { Discipline: 1 } },

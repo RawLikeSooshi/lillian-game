@@ -37,7 +37,7 @@ export const ch5EncounterLadon = {
   choices: [
     {
       prompt: "Three heads strike from the left. The ground trembles as Ladon's coils shift against the tree. Ancient. Massive. Sad.",
-      timer: 10,
+      timer: 15,
       options: [
         { text: "Roll under the strike — come up behind the nearest head!", stat: "Cunning", statChanges: { Cunning: 1 } },
         { text: "Stand firm. Deflect with your shield. Don't give ground!", stat: "Courage", statChanges: { Courage: 1 } },
@@ -46,7 +46,7 @@ export const ch5EncounterLadon = {
     },
     {
       prompt: "Ladon's tail sweeps the garden floor. Debris flies. A wall of tarnished scales rushes at you like a falling building.",
-      timer: 10,
+      timer: 15,
       options: [
         { text: "Leap the tail. Strike his flank. Keep moving!", stat: "Courage", statChanges: { Courage: 1 } },
         { text: "Time the sweep. Drop flat. Let it pass inches above you.", stat: "Discipline", statChanges: { Discipline: 1 } },

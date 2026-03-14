@@ -19,7 +19,7 @@ export default function EncounterScreen({
   const [round, setRound] = useState(0);
   const [roundResults, setRoundResults] = useState([]);
   const [currentRoll, setCurrentRoll] = useState(null);
-  const [phase, setPhase] = useState("choose"); // choose | rolling | result | complete
+  const [phase, setPhase] = useState("reading"); // reading | choose | rolling | result | complete
   const [timerKey, setTimerKey] = useState(0);
 
   const currentRoundData = encounter.choices[round];
@@ -81,8 +81,7 @@ export default function EncounterScreen({
     } else {
       setRound(round + 1);
       setCurrentRoll(null);
-      setPhase("choose");
-      setTimerKey(k => k + 1);
+      setPhase("reading");
     }
   }, [round, roundResults, currentRoll, encounter, onEncounterComplete]);
 
@@ -130,12 +129,43 @@ export default function EncounterScreen({
         </div>
       )}
 
-      {/* Combat round */}
+      {/* Reading phase — show prompt, let player read before timer starts */}
+      {phase === "reading" && (
+        <div style={{ ...encounterCard, marginBottom: 16 }}>
+          <div style={{
+            fontSize: 13, color: "#706050", letterSpacing: 2, textTransform: "uppercase",
+            textAlign: "center", marginBottom: 12,
+          }}>
+            Round {round + 1} of {encounter.choices.length}
+          </div>
+          <div style={{
+            fontSize: 17, color: "#e8d8b0", marginBottom: 20,
+            fontFamily: "'Cormorant Garamond', Georgia, serif", lineHeight: 1.7, textAlign: "center",
+          }}>
+            {currentRoundData.prompt}
+          </div>
+          <div style={{ textAlign: "center" }}>
+            <button
+              onClick={() => { setPhase("choose"); setTimerKey(k => k + 1); }}
+              style={{
+                ...goldBtn,
+                fontSize: 17,
+                padding: "14px 36px",
+                animation: "glowPulse 2s ease-in-out infinite",
+              }}
+            >
+              Ready to Act
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Combat round — timer starts, choices visible */}
       {phase === "choose" && (
         <div style={{ ...encounterCard, marginBottom: 16 }}>
           <TimedChoiceBar
             key={timerKey}
-            duration={currentRoundData.timer || 10}
+            duration={currentRoundData.timer || 15}
             active={true}
             onExpire={handleTimerExpire}
             timerExtension={timerExtension}

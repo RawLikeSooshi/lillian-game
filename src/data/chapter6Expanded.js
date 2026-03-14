@@ -47,7 +47,7 @@ export const ch6EncounterCerberus = {
     },
     {
       prompt: "All three heads rear back. A unified growl shakes dust from the ceiling. The cavern vibrates in your teeth.",
-      timer: 10,
+      timer: 15,
       options: [
         { text: "Step forward. Closer, not farther. Into the growl.", stat: "Courage", statChanges: { Courage: 1 } },
         { text: "Throw something to the side. Split his attention.", stat: "Cunning", statChanges: { Cunning: 1 } },
@@ -56,7 +56,7 @@ export const ch6EncounterCerberus = {
     },
     {
       prompt: "The right head drops low, sniffing near your feet. Warm breath on your ankles. The left growls a warning. The middle tilts — considering.",
-      timer: 10,
+      timer: 15,
       options: [
         { text: "Extend your hand. Slowly. Palm up. Let him decide.", stat: "Empathy", statChanges: { Empathy: 1 } },
         { text: "Hum a tune. Something gentle. Orpheus knew the way.", stat: "Wisdom", statChanges: { Wisdom: 1 } },

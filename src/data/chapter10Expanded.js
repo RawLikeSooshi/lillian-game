@@ -55,7 +55,7 @@ export const ch10EncounterAscent = {
     },
     {
       prompt: "The summit is close — you can see the light above the clouds. But the final stretch is vertical. Smooth crystal, no handholds, and the divine pressure is at its strongest. Your arms burn. Your vision blurs. Everything in your body says stop.",
-      timer: 10,
+      timer: 15,
       options: [
         { text: "Call on your divine blood. Let the lightning carry you.", stat: "Courage", statChanges: { Courage: 2 } },
         { text: "Find peace. Let go of the struggle. Rise instead of climb.", stat: "Empathy", statChanges: { Empathy: 1 } },

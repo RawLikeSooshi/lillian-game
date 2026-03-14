@@ -24,7 +24,7 @@ export const ch2Encounter = {
   choices: [
     {
       prompt: "They fan out across the road. The leader raises a blade. Your heartbeat fills your ears.",
-      timer: 10,
+      timer: 15,
       options: [
         {
           text: "Stand tall and tell them to move aside.",
@@ -45,7 +45,7 @@ export const ch2Encounter = {
     },
     {
       prompt: "The leader lunges. His blade cuts the air. The other two circle wide.",
-      timer: 10,
+      timer: 15,
       options: [
         {
           text: "Dodge low and push past. The road is what matters.",
@@ -66,7 +66,7 @@ export const ch2Encounter = {
     },
     {
       prompt: "It's ending. One bandit is on the ground, holding his ribs. He's done. No threat left in him.",
-      timer: 10,
+      timer: 15,
       options: [
         {
           text: "Help him up. He's hurt. This is over.",
