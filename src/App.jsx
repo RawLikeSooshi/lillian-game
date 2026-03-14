@@ -1001,5 +1001,19 @@ export default function App() {
     );
   }
 
-  return null;
+  // Fallback — no phase matched. Show debug info instead of blank screen.
+  console.error("No phase matched:", phase, "step:", currentStep?.type, "stepIndex:", stepIndex);
+  return (
+    <div style={{ padding: 32, color: "#ff6b6b", background: "#1a1008", minHeight: "100vh", fontFamily: "monospace" }}>
+      <h2 style={{ color: "#d4a017" }}>Phase not found</h2>
+      <p style={{ color: "#e8d8b0", marginTop: 12 }}>Phase: <strong>{phase}</strong></p>
+      <p style={{ color: "#e8d8b0" }}>Step type: <strong>{currentStep?.type || "none"}</strong></p>
+      <p style={{ color: "#e8d8b0" }}>Step index: <strong>{stepIndex}</strong></p>
+      <p style={{ color: "#e8d8b0" }}>Chapter: <strong>{chapter}</strong></p>
+      <button onClick={() => { localStorage.removeItem("hero-of-olympus-save"); window.location.reload(); }}
+        style={{ marginTop: 24, padding: "12px 24px", background: "#d4a017", border: "none", borderRadius: 8, color: "#1a1008", cursor: "pointer", fontWeight: "bold" }}>
+        Clear Save & Restart
+      </button>
+    </div>
+  );
 }
