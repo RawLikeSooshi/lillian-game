@@ -539,16 +539,17 @@ export default function App() {
     setPendingForkChoice(null);
   };
 
-  // After fork confirmation, flow recomputes
+  // After fork confirmation, flow recomputes — advance past the fork step
   useEffect(() => {
-    if (phase === "questForkConfirm" && forkChoice && currentStep) {
-      if (currentStep.type === STEP_TYPES.SCENE) {
-        setPhase(currentStep.scene.transitionText ? "transition" : "scene");
-      } else if (currentStep.type === STEP_TYPES.PUZZLE) {
-        setPuzzleState(INITIAL_PUZZLE_STATE);
-        setPhase("puzzle");
+    if (phase === "questForkConfirm" && forkChoice) {
+      // stepIndex still points at the questFork step — advance to the next step
+      const nextIndex = stepIndex + 1;
+      const nextStep = flow[nextIndex];
+      if (nextStep) {
+        setStepIndex(nextIndex);
+        setPhaseForStep(nextStep);
       } else {
-        setPhaseForStep(currentStep);
+        setPhase("end");
       }
     }
   }, [flow, forkChoice]);
