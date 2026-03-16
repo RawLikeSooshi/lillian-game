@@ -96,10 +96,6 @@ export default function App() {
   const [usedPowers, setUsedPowers] = useState({});
   const [postPhase, setPostPhase] = useState(null); // phase to go to after power unlock
 
-  // ── Audio ──
-  const sceneMood = currentStep?.scene?.mood || currentStep?.mood || null;
-  const audio = useAudio(chapter, sceneMood);
-
   // ── Derived State ──
   const powers = useMemo(() => getUnlockedPowers(stats), [stats]);
   const oathBuffs = useMemo(() => getOathBuffs(oaths), [oaths]);
@@ -129,6 +125,10 @@ export default function App() {
   const currentSceneNumber = getSceneNumber(flow, stepIndex);
   const figure = getMythFigure(stats);
   const identity = heroIdentity(stats);
+
+  // ── Audio ──
+  const sceneMood = currentStep?.scene?.mood || currentStep?.mood || null;
+  const audio = useAudio(chapter, sceneMood);
 
   const resolvedScene = currentStep?.type === STEP_TYPES.SCENE
     ? resolveSceneText(currentStep.scene, flags, figure)
