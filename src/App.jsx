@@ -997,6 +997,7 @@ export default function App() {
 
   if (phase === "questForkConfirm") {
     const fork = currentStep?.fork || flow[stepIndex]?.fork;
+    if (!fork) return null; // flow recomputed after confirm — useEffect will advance
     return (
       <QuestForkConfirmScreen
         fork={fork}
