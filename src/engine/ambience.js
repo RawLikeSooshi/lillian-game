@@ -575,30 +575,426 @@ const buildOlympus = (ctx, dest, timers) => {
   return nodes;
 };
 
-// ── Chapter → Builder Map ──
+// ── Scene-specific builders ──
 
-const builders = {
-  1: buildRoad,
-  2: buildRoad,    // slightly different via random events
-  3: buildCity,
-  4: buildSea,
-  5: buildGarden,
-  6: buildUnderworld,
-  7: buildForge,
-  8: buildLabyrinth,
-  9: buildBattle,
-  10: buildOlympus,
+const buildTemple = (ctx, dest, timers) => {
+  const nodes = [];
+  // Crowd murmur
+  const crowd = createNoiseNode("pink", 3);
+  const bp = ctx.createBiquadFilter();
+  bp.type = "bandpass"; bp.frequency.value = 400; bp.Q.value = 0.4;
+  const cg = ctx.createGain(); cg.gain.value = 0.2;
+  const lfo = ctx.createOscillator(); lfo.type = "triangle"; lfo.frequency.value = 0.2;
+  const ld = ctx.createGain(); ld.gain.value = 0.08;
+  lfo.connect(ld); ld.connect(cg.gain); lfo.start(); nodes.push(lfo);
+  crowd.connect(bp); bp.connect(cg); cg.connect(dest); crowd.start(); nodes.push(crowd);
+  // Echoing footsteps
+  scheduleRandom(() => {
+    if (!getCtx()) return;
+    const o = ctx.createOscillator(); const g = ctx.createGain();
+    o.type = "sine"; o.frequency.value = 600 + Math.random() * 200;
+    g.gain.setValueAtTime(0.04, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06);
+    const d = ctx.createDelay(0.2); d.delayTime.value = 0.12;
+    const fb = ctx.createGain(); fb.gain.value = 0.25;
+    o.connect(g); g.connect(dest); g.connect(d); d.connect(fb); fb.connect(d); fb.connect(dest);
+    o.start(); o.stop(ctx.currentTime + 0.08);
+    setTimeout(() => { try { d.disconnect(); fb.disconnect(); } catch(_){} }, 1000);
+  }, 2000, 5000, timers);
+  // Low chant drone
+  const chant = ctx.createOscillator(); chant.type = "sine"; chant.frequency.value = 130;
+  const chG = ctx.createGain(); chG.gain.value = 0.03;
+  const vib = ctx.createOscillator(); vib.frequency.value = 0.4;
+  const vd = ctx.createGain(); vd.gain.value = 2;
+  vib.connect(vd); vd.connect(chant.frequency); vib.start(); nodes.push(vib);
+  chant.connect(chG); chG.connect(dest); chant.start(); nodes.push(chant);
+  return nodes;
+};
+
+const buildMarket = (ctx, dest, timers) => {
+  const nodes = [];
+  // Dense crowd
+  const crowd = createNoiseNode("pink", 3);
+  const bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = 600; bp.Q.value = 0.3;
+  const cg = ctx.createGain(); cg.gain.value = 0.3;
+  crowd.connect(bp); bp.connect(cg); cg.connect(dest); crowd.start(); nodes.push(crowd);
+  // Vendor calls (higher pitched bursts)
+  scheduleRandom(() => {
+    if (!getCtx()) return;
+    const f = 300 + Math.random() * 400;
+    const o = ctx.createOscillator(); const g = ctx.createGain();
+    o.type = "triangle"; o.frequency.value = f;
+    g.gain.setValueAtTime(0.05, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+    o.connect(g); g.connect(dest); o.start(); o.stop(ctx.currentTime + 0.18);
+  }, 2000, 6000, timers);
+  // Metallic clinks and clattering
+  scheduleRandom(() => {
+    if (!getCtx()) return;
+    const o = ctx.createOscillator(); const g = ctx.createGain();
+    o.type = "sine"; o.frequency.value = 1500 + Math.random() * 1000;
+    g.gain.setValueAtTime(0.04, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.04);
+    o.connect(g); g.connect(dest); o.start(); o.stop(ctx.currentTime + 0.06);
+  }, 3000, 7000, timers);
+  return nodes;
+};
+
+const buildInn = (ctx, dest, timers) => {
+  const nodes = [];
+  // Fireplace
+  const fire = createNoiseNode("white", 3);
+  const fbp = ctx.createBiquadFilter(); fbp.type = "bandpass"; fbp.frequency.value = 2000; fbp.Q.value = 0.5;
+  const fg = ctx.createGain(); fg.gain.value = 0.12;
+  const mod = createNoiseNode("brown", 2); const mg = ctx.createGain(); mg.gain.value = 0.06;
+  mod.connect(mg); mg.connect(fg.gain); mod.start(); nodes.push(mod);
+  fire.connect(fbp); fbp.connect(fg); fg.connect(dest); fire.start(); nodes.push(fire);
+  // Muffled crowd
+  const mc = createNoiseNode("pink", 3);
+  const mbp = ctx.createBiquadFilter(); mbp.type = "lowpass"; mbp.frequency.value = 300;
+  const mcg = ctx.createGain(); mcg.gain.value = 0.1;
+  mc.connect(mbp); mbp.connect(mcg); mcg.connect(dest); mc.start(); nodes.push(mc);
+  // Wood creak
+  scheduleRandom(() => {
+    if (!getCtx()) return;
+    const o = ctx.createOscillator(); const g = ctx.createGain();
+    o.type = "sine"; o.frequency.setValueAtTime(180, ctx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(120, ctx.currentTime + 0.2);
+    g.gain.setValueAtTime(0.03, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+    o.connect(g); g.connect(dest); o.start(); o.stop(ctx.currentTime + 0.3);
+  }, 6000, 15000, timers);
+  return nodes;
+};
+
+const buildForest = (ctx, dest, timers) => {
+  const nodes = [];
+  // Rustling leaves
+  const leaves = createNoiseNode("pink", 3);
+  const lbp = ctx.createBiquadFilter(); lbp.type = "bandpass"; lbp.frequency.value = 1200; lbp.Q.value = 0.5;
+  const lg = ctx.createGain(); lg.gain.value = 0.12;
+  const llfo = ctx.createOscillator(); llfo.type = "triangle"; llfo.frequency.value = 0.15;
+  const lld = ctx.createGain(); lld.gain.value = 0.06;
+  llfo.connect(lld); lld.connect(lg.gain); llfo.start(); nodes.push(llfo);
+  leaves.connect(lbp); lbp.connect(lg); lg.connect(dest); leaves.start(); nodes.push(leaves);
+  // Bird calls
+  scheduleRandom(() => {
+    if (!getCtx()) return;
+    const f = 1800 + Math.random() * 1200;
+    const o = ctx.createOscillator(); const g = ctx.createGain();
+    o.type = "sine"; o.frequency.value = f;
+    g.gain.setValueAtTime(0.05, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
+    o.connect(g); g.connect(dest); o.start(); o.stop(ctx.currentTime + 0.15);
+  }, 3000, 8000, timers);
+  // Creaking branches
+  scheduleRandom(() => {
+    if (!getCtx()) return;
+    const o = ctx.createOscillator(); const g = ctx.createGain();
+    o.type = "sine"; o.frequency.setValueAtTime(250, ctx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(150, ctx.currentTime + 0.3);
+    g.gain.setValueAtTime(0.02, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+    o.connect(g); g.connect(dest); o.start(); o.stop(ctx.currentTime + 0.4);
+  }, 8000, 20000, timers);
+  // Gentle wind
+  const wind = createNoiseNode("brown", 3);
+  const wlp = ctx.createBiquadFilter(); wlp.type = "lowpass"; wlp.frequency.value = 300;
+  const wg = ctx.createGain(); wg.gain.value = 0.15;
+  wind.connect(wlp); wlp.connect(wg); wg.connect(dest); wind.start(); nodes.push(wind);
+  return nodes;
+};
+
+const buildDocks = (ctx, dest, timers) => {
+  const nodes = [];
+  // Water lapping
+  const water = createNoiseNode("brown", 4);
+  const wbp = ctx.createBiquadFilter(); wbp.type = "bandpass"; wbp.frequency.value = 300; wbp.Q.value = 0.5;
+  const wg = ctx.createGain(); wg.gain.value = 0.2;
+  const wlfo = ctx.createOscillator(); wlfo.type = "triangle"; wlfo.frequency.value = 0.2;
+  const wld = ctx.createGain(); wld.gain.value = 0.08;
+  wlfo.connect(wld); wld.connect(wg.gain); wlfo.start(); nodes.push(wlfo);
+  water.connect(wbp); wbp.connect(wg); wg.connect(dest); water.start(); nodes.push(water);
+  // Gulls
+  scheduleRandom(() => {
+    if (!getCtx()) return;
+    const o = ctx.createOscillator(); const g = ctx.createGain();
+    o.type = "sine"; o.frequency.setValueAtTime(2000 + Math.random() * 500, ctx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(1500, ctx.currentTime + 0.2);
+    g.gain.setValueAtTime(0.04, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+    o.connect(g); g.connect(dest); o.start(); o.stop(ctx.currentTime + 0.3);
+  }, 4000, 10000, timers);
+  // Rope creaking
+  scheduleRandom(() => {
+    if (!getCtx()) return;
+    const o = ctx.createOscillator(); const g = ctx.createGain();
+    o.type = "sine"; o.frequency.value = 200;
+    const v = ctx.createOscillator(); v.frequency.value = 6;
+    const vg = ctx.createGain(); vg.gain.value = 20;
+    v.connect(vg); vg.connect(o.frequency); v.start(); v.stop(ctx.currentTime + 0.4);
+    g.gain.setValueAtTime(0.025, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+    o.connect(g); g.connect(dest); o.start(); o.stop(ctx.currentTime + 0.4);
+  }, 5000, 12000, timers);
+  // Sailors murmur
+  const sm = createNoiseNode("pink", 3);
+  const sbp = ctx.createBiquadFilter(); sbp.type = "bandpass"; sbp.frequency.value = 500; sbp.Q.value = 0.5;
+  const sg = ctx.createGain(); sg.gain.value = 0.08;
+  sm.connect(sbp); sbp.connect(sg); sg.connect(dest); sm.start(); nodes.push(sm);
+  return nodes;
+};
+
+const buildWell = (ctx, dest, timers) => {
+  const nodes = [];
+  // Crickets
+  scheduleRandom(() => {
+    if (!getCtx()) return;
+    const o = ctx.createOscillator(); const g = ctx.createGain();
+    o.type = "sine"; o.frequency.value = 3500 + Math.random() * 1000;
+    g.gain.setValueAtTime(0.06, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+    o.connect(g); g.connect(dest); o.start(); o.stop(ctx.currentTime + 0.1);
+  }, 2000, 5000, timers);
+  // Light breeze
+  const wind = createNoiseNode("brown", 3);
+  const wlp = ctx.createBiquadFilter(); wlp.type = "lowpass"; wlp.frequency.value = 250;
+  const wg = ctx.createGain(); wg.gain.value = 0.12;
+  wind.connect(wlp); wlp.connect(wg); wg.connect(dest); wind.start(); nodes.push(wind);
+  // Water in well
+  const drip = createNoiseNode("brown", 3);
+  const dbp = ctx.createBiquadFilter(); dbp.type = "bandpass"; dbp.frequency.value = 500; dbp.Q.value = 1;
+  const dg = ctx.createGain(); dg.gain.value = 0.04;
+  drip.connect(dbp); dbp.connect(dg); dg.connect(dest); drip.start(); nodes.push(drip);
+  return nodes;
+};
+
+const buildArena = (ctx, dest, timers) => {
+  const nodes = [];
+  // Crowd cheering
+  const crowd = createNoiseNode("pink", 3);
+  const cbp = ctx.createBiquadFilter(); cbp.type = "bandpass"; cbp.frequency.value = 700; cbp.Q.value = 0.3;
+  const cg = ctx.createGain(); cg.gain.value = 0.25;
+  const clfo = ctx.createOscillator(); clfo.type = "triangle"; clfo.frequency.value = 0.15;
+  const cld = ctx.createGain(); cld.gain.value = 0.1;
+  clfo.connect(cld); cld.connect(cg.gain); clfo.start(); nodes.push(clfo);
+  crowd.connect(cbp); cbp.connect(cg); cg.connect(dest); crowd.start(); nodes.push(crowd);
+  // Sand/feet
+  scheduleRandom(() => {
+    if (!getCtx()) return;
+    const n = createNoiseNode("brown", 0.08); if (!n) return;
+    const bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = 800; bp.Q.value = 1;
+    const g = ctx.createGain(); g.gain.setValueAtTime(0.06, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+    n.connect(bp); bp.connect(g); g.connect(dest); n.start(); n.stop(ctx.currentTime + 0.1);
+  }, 1500, 4000, timers);
+  return nodes;
+};
+
+const buildCampfire = (ctx, dest, timers) => {
+  const nodes = [];
+  // Fire
+  const fire = createNoiseNode("white", 3);
+  const fbp = ctx.createBiquadFilter(); fbp.type = "bandpass"; fbp.frequency.value = 2500; fbp.Q.value = 0.5;
+  const fg = ctx.createGain(); fg.gain.value = 0.15;
+  const mod = createNoiseNode("brown", 2); const mg = ctx.createGain(); mg.gain.value = 0.08;
+  mod.connect(mg); mg.connect(fg.gain); mod.start(); nodes.push(mod);
+  fire.connect(fbp); fbp.connect(fg); fg.connect(dest); fire.start(); nodes.push(fire);
+  // Crickets
+  scheduleRandom(() => {
+    if (!getCtx()) return;
+    const o = ctx.createOscillator(); const g = ctx.createGain();
+    o.type = "sine"; o.frequency.value = 3800 + Math.random() * 800;
+    g.gain.setValueAtTime(0.04, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+    o.connect(g); g.connect(dest); o.start(); o.stop(ctx.currentTime + 0.1);
+  }, 3000, 6000, timers);
+  // Wind
+  const wind = createNoiseNode("brown", 3);
+  const wlp = ctx.createBiquadFilter(); wlp.type = "lowpass"; wlp.frequency.value = 200;
+  const wg = ctx.createGain(); wg.gain.value = 0.08;
+  wind.connect(wlp); wlp.connect(wg); wg.connect(dest); wind.start(); nodes.push(wind);
+  return nodes;
+};
+
+const buildLibrary = (ctx, dest, timers) => {
+  const nodes = [];
+  // Deep silence with faint reverberant hum
+  const hum = ctx.createOscillator(); hum.type = "sine"; hum.frequency.value = 60;
+  const hg = ctx.createGain(); hg.gain.value = 0.02;
+  hum.connect(hg); hg.connect(dest); hum.start(); nodes.push(hum);
+  // Paper rustling
+  scheduleRandom(() => {
+    if (!getCtx()) return;
+    const n = createNoiseNode("white", 0.1); if (!n) return;
+    const bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = 3000; bp.Q.value = 2;
+    const g = ctx.createGain(); g.gain.setValueAtTime(0.03, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+    n.connect(bp); bp.connect(g); g.connect(dest); n.start(); n.stop(ctx.currentTime + 0.12);
+  }, 5000, 15000, timers);
+  // Distant footstep echo
+  scheduleRandom(() => {
+    if (!getCtx()) return;
+    const o = ctx.createOscillator(); const g = ctx.createGain();
+    o.type = "sine"; o.frequency.value = 400;
+    g.gain.setValueAtTime(0.02, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.04);
+    const d = ctx.createDelay(0.3); d.delayTime.value = 0.15;
+    const fb = ctx.createGain(); fb.gain.value = 0.3;
+    o.connect(g); g.connect(dest); g.connect(d); d.connect(fb); fb.connect(d); fb.connect(dest);
+    o.start(); o.stop(ctx.currentTime + 0.06);
+    setTimeout(() => { try { d.disconnect(); fb.disconnect(); } catch(_){} }, 1000);
+  }, 4000, 10000, timers);
+  return nodes;
+};
+
+const buildRiver = (ctx, dest, timers) => {
+  const nodes = [];
+  // Running water
+  const water = createNoiseNode("pink", 4);
+  const wbp = ctx.createBiquadFilter(); wbp.type = "bandpass"; wbp.frequency.value = 800; wbp.Q.value = 0.3;
+  const wg = ctx.createGain(); wg.gain.value = 0.2;
+  water.connect(wbp); wbp.connect(wg); wg.connect(dest); water.start(); nodes.push(water);
+  // Splashing
+  scheduleRandom(() => {
+    if (!getCtx()) return;
+    const n = createNoiseNode("white", 0.08); if (!n) return;
+    const bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = 2000; bp.Q.value = 1;
+    const g = ctx.createGain(); g.gain.setValueAtTime(0.05, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+    n.connect(bp); bp.connect(g); g.connect(dest); n.start(); n.stop(ctx.currentTime + 0.1);
+  }, 3000, 8000, timers);
+  // Birds
+  scheduleRandom(() => {
+    if (!getCtx()) return;
+    const o = ctx.createOscillator(); const g = ctx.createGain();
+    o.type = "sine"; o.frequency.value = 2200 + Math.random() * 800;
+    g.gain.setValueAtTime(0.03, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+    o.connect(g); g.connect(dest); o.start(); o.stop(ctx.currentTime + 0.12);
+  }, 4000, 10000, timers);
+  return nodes;
+};
+
+const buildShip = (ctx, dest, timers) => {
+  const nodes = [];
+  // Waves against hull
+  const waves = createNoiseNode("brown", 4);
+  const wlp = ctx.createBiquadFilter(); wlp.type = "lowpass"; wlp.frequency.value = 350;
+  const wg = ctx.createGain(); wg.gain.value = 0.25;
+  const wlfo = ctx.createOscillator(); wlfo.type = "triangle"; wlfo.frequency.value = 0.12;
+  const wld = ctx.createGain(); wld.gain.value = 0.1;
+  wlfo.connect(wld); wld.connect(wg.gain); wlfo.start(); nodes.push(wlfo);
+  waves.connect(wlp); wlp.connect(wg); wg.connect(dest); waves.start(); nodes.push(waves);
+  // Wood creaking
+  scheduleRandom(() => {
+    if (!getCtx()) return;
+    const o = ctx.createOscillator(); const g = ctx.createGain();
+    o.type = "sine"; o.frequency.setValueAtTime(200, ctx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(140, ctx.currentTime + 0.3);
+    g.gain.setValueAtTime(0.03, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+    o.connect(g); g.connect(dest); o.start(); o.stop(ctx.currentTime + 0.4);
+  }, 4000, 10000, timers);
+  // Wind in sails
+  const wind = createNoiseNode("pink", 3);
+  const bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = 500; bp.Q.value = 0.3;
+  const fg = ctx.createGain(); fg.gain.value = 0.1;
+  wind.connect(bp); bp.connect(fg); fg.connect(dest); wind.start(); nodes.push(wind);
+  return nodes;
+};
+
+const buildSacred = (ctx, dest, timers) => {
+  const nodes = [];
+  // Deep silence with divine hum
+  [165, 167].forEach((f) => {
+    const o = ctx.createOscillator(); o.type = "sine"; o.frequency.value = f;
+    const g = ctx.createGain(); g.gain.value = 0.04;
+    o.connect(g); g.connect(dest); o.start(); nodes.push(o);
+  });
+  // Wind whisper
+  const wind = createNoiseNode("brown", 3);
+  const wlp = ctx.createBiquadFilter(); wlp.type = "lowpass"; wlp.frequency.value = 200;
+  const wg = ctx.createGain(); wg.gain.value = 0.06;
+  wind.connect(wlp); wlp.connect(wg); wg.connect(dest); wind.start(); nodes.push(wind);
+  return nodes;
+};
+
+const buildPalace = (ctx, dest, timers) => {
+  const nodes = [];
+  // Echoing stone chamber
+  const hum = createNoiseNode("brown", 3);
+  const bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = 300; bp.Q.value = 0.8;
+  const hg = ctx.createGain(); hg.gain.value = 0.08;
+  hum.connect(bp); bp.connect(hg); hg.connect(dest); hum.start(); nodes.push(hum);
+  // Footsteps on stone
+  scheduleRandom(() => {
+    if (!getCtx()) return;
+    const o = ctx.createOscillator(); const g = ctx.createGain();
+    o.type = "sine"; o.frequency.value = 500 + Math.random() * 200;
+    g.gain.setValueAtTime(0.03, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.04);
+    const d = ctx.createDelay(0.3); d.delayTime.value = 0.1;
+    const fb = ctx.createGain(); fb.gain.value = 0.3;
+    o.connect(g); g.connect(dest); g.connect(d); d.connect(fb); fb.connect(d); fb.connect(dest);
+    o.start(); o.stop(ctx.currentTime + 0.06);
+    setTimeout(() => { try { d.disconnect(); fb.disconnect(); } catch(_){} }, 1000);
+  }, 3000, 8000, timers);
+  // Distant murmurs
+  const mc = createNoiseNode("pink", 3);
+  const mbp = ctx.createBiquadFilter(); mbp.type = "lowpass"; mbp.frequency.value = 250;
+  const mg = ctx.createGain(); mg.gain.value = 0.06;
+  mc.connect(mbp); mbp.connect(mg); mg.connect(dest); mc.start(); nodes.push(mc);
+  return nodes;
+};
+
+// ── Mood → Builder Map ──
+
+const moodBuilders = {
+  road: buildRoad,
+  city: buildCity,
+  sea: buildSea,
+  garden: buildGarden,
+  underworld: buildUnderworld,
+  forge: buildForge,
+  labyrinth: buildLabyrinth,
+  battle: buildBattle,
+  olympus: buildOlympus,
+  temple: buildTemple,
+  market: buildMarket,
+  inn: buildInn,
+  forest: buildForest,
+  docks: buildDocks,
+  well: buildWell,
+  arena: buildArena,
+  campfire: buildCampfire,
+  library: buildLibrary,
+  river: buildRiver,
+  ship: buildShip,
+  sacred: buildSacred,
+  palace: buildPalace,
+};
+
+// Chapter default moods (fallback when scene has no mood)
+const CHAPTER_MOODS = {
+  1: "road", 2: "road", 3: "city", 4: "sea", 5: "garden",
+  6: "underworld", 7: "forge", 8: "labyrinth", 9: "battle", 10: "olympus",
 };
 
 // ── Public API ──
 
-export const startAmbience = (chapter) => {
+/**
+ * Start ambience for a given mood. If mood is null, uses chapter default.
+ * Crossfades between moods automatically.
+ */
+export const startAmbience = (chapter, mood) => {
   const ctx = getCtx();
   if (!ctx) return;
-  if (current && current.chapter === chapter) return;
+  const activeMood = mood || CHAPTER_MOODS[chapter] || "road";
+  if (current && current.mood === activeMood) return;
 
   const master = getMaster();
-  const builder = builders[chapter] || buildRoad;
+  const builder = moodBuilders[activeMood] || buildRoad;
 
   // Create new
   const gain = ctx.createGain();
@@ -616,7 +1012,7 @@ export const startAmbience = (chapter) => {
     setTimeout(() => cleanup(old), FADE * 1000 + 200);
   }
 
-  current = { chapter, nodes, gain, timers };
+  current = { mood: activeMood, nodes, gain, timers };
 };
 
 export const stopAmbience = () => {

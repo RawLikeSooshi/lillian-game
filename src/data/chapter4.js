@@ -9,6 +9,7 @@ export const chapter4Scenes = {
     id: "ch4_port",
     title: "The Port at Rhegion",
     image: "⚓",
+    mood: "docks",
     transitionText: "The road south ends where all roads end eventually — at the sea. Rhegion appears around a bend in the coast: a rough port town of salt-crusted timber and tarred rope, where the gulls scream like they're arguing with the wind and losing. From the dock, you can see the straits — a narrow throat of water between two landmasses, where the current moves in ways that look less like water and more like something breathing.",
     atmosphere: "Salt and tar. Ropes creak against the pier. The wind carries something else — a low sound from the strait, like the sea clearing its throat.",
     text: "You need to cross the Straits of Messina. Every sailor you ask says the same thing: possible, but never safe. Something lives in the rocks on the east side — something with too many mouths. Something else churns the water on the west, pulling ships down into a throat of foam that opens and closes like a heartbeat.\n\nThree captains are willing to take you.\n\nA young woman with a fast ship and a crew of twelve. She moves like her vessel — sharp, confident, aggressive. She charges double and doesn't apologize for it.\n\nAn old man with a fishing boat so weathered it looks like driftwood that learned to float. Slow, he says, but he knows every current by name. Been crossing for forty years. He charges nothing — says he's going that way anyway.\n\nA merchant captain with a cargo vessel. Heavy, stable, room for passengers. Fair price, fair speed. The kind of choice that would never be a story anyone tells.",
@@ -48,6 +49,7 @@ export const chapter4Scenes = {
     id: "ch4_crossing",
     title: "The Crossing",
     image: "🌊",
+    mood: "ship",
     transitionText: "Dawn. The sail fills. The ship noses into the strait like a finger into a wound.\n\nThe water changes — dark blue to grey-green, the color of something old and troubled. The current grabs the hull, and you feel the whole ship shudder, as if it just realized where it's going.",
     atmosphere: "The strait narrows. Wind dies. The water churns from somewhere below, moving in directions that don't make sense. On the eastern cliffs, something shifts — too large, too many shapes at once.",
     textVariants: {
@@ -90,6 +92,7 @@ export const chapter4Scenes = {
     id: "ch4_aftermath",
     title: "The Cost of Passage",
     image: "🩸",
+    mood: "ship",
     atmosphere: "The strait opens behind you like an unclenched fist. Sicily ahead — green, warm, impossibly still. But the ship is wounded, and so is someone aboard.",
     textVariants: {
       helpedCrewDuringCrossing: "The crossing is over. The ship is battered — rigging torn, hull gouged, the mainsail hanging like a broken wing. You're soaked, exhausted, and alive.\n\nBut not everyone came through whole. A young sailor — barely older than you, with sea-salt hair and hands that haven't finished growing — was caught by one of Scylla's heads. He's alive, but his arm is badly injured. The captain wraps it while the sailor tries not to cry and mostly succeeds.\n\n\"This is the price,\" the captain says. Not to the sailor. To you. \"The straits always take something.\"",
@@ -134,6 +137,7 @@ export const chapter4Scenes = {
     id: "ch4_shore",
     title: "The Sicilian Shore",
     image: "🏝️",
+    mood: "road",
     atmosphere: "White sand warm under your feet. Wild oregano on the wind. The sound of the strait fading behind you, replaced by cicadas and the lap of gentle water. A different sea — the same sea, behaving itself.",
     text: "Sicily is a different country in everything but language. The air is warmer, heavy with jasmine and wild thyme. The trees are strange — twisted pines and silvery olives and something with dark leaves and bright fruit you've never seen. The people speak Greek with an accent that rounds every word like a pebble smoothed by water.\n\nThe port town where you land is small but welcoming. News of the crossing has already spread — a ship making it through the strait with all hands alive is notable enough to earn free wine and a table near the fire.\n\nThe captain — whoever you chose — finds you before departing.\n\n\"The road ahead leads to the western coast,\" they say, one hand on the doorframe, half-in and half-out of your story. \"I've heard talk of a garden there. At the edge of the world. Golden fruit. A dragon that never sleeps.\"\n\nThey pause. \"Most people think it's a myth.\" Their eyes find yours. \"But then, most people think Scylla is a myth too.\"",
     choices: [

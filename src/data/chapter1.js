@@ -1,6 +1,6 @@
 const chapter1 = [
   {
-    id: "intro", title: "The Road to Delphi", image: "🛤️",
+    id: "intro", title: "The Road to Delphi", image: "🛤️", mood: "road",
     atmosphere: "Dry sage and warm dust. Cicadas pulse in the olive groves. The road shimmers ahead like something not quite decided.",
     text: `The road to Delphi is longer than anyone told you it would be.\n\nYour sandals scuff against packed earth. The sun presses on your shoulders like a hand, and the hills ahead look older than the ones you left behind — wilder, darker, as if the land itself is changing its mind about something.\n\nYou've been walking since dawn when you see her.\n\nAn old woman, alone on the road. Her cart is sunk deep in the mud, one wheel jammed at an ugly angle. She pulls with both hands, knuckles white, but the wheel won't move. When she looks up, her eyes find yours — dark and strange. Not desperate.\n\nMore like she's been waiting.`,
     choices: [
@@ -11,7 +11,7 @@ const chapter1 = [
     ],
   },
   {
-    id: "crossroads", title: "The Riddle at the Crossroads", image: "🌲",
+    id: "crossroads", title: "The Riddle at the Crossroads", image: "🌲", mood: "forest",
     transitionText: "The road narrows. A hawk circles once overhead, then peels away toward the mountains. The air is cooler here. The olive trees have given way to pines, and the shadows between them are deep and still.",
     atmosphere: "Pine resin and cold stone. Two paths split ahead. The carved markers are so old the letters have softened into suggestions.",
     text: `The crossroads comes on you suddenly — one step you're walking, the next you're choosing.\n\nA carved stone marker stands where the road divides. One arrow points right: The Long Road — Safe, 2 days. The other points left: The Forest Path — Fast, half a day. Below it, scratched in smaller letters: Enter only if you can answer the Sphinx's riddle.\n\nA group of older travelers rest nearby, shaking their heads at the forest path. "Three people tried last month," one says, adjusting his pack. "None came back with their pride intact."\n\nAnother adds, quieter: "She doesn't hurt you. She just asks a question you can't forget."`,
@@ -23,7 +23,7 @@ const chapter1 = [
     ],
   },
   {
-    id: "temple", title: "The Temple of Apollo", image: "🏛️",
+    id: "temple", title: "The Temple of Apollo", image: "🏛️", mood: "temple",
     transitionText: "The path climbs through a grove of laurel trees. The leaves smell sweet and sharp — temple-smell, even before you can see the temple. Then the trees open, and there it is: white marble against a blue sky, so bright it makes your eyes ache.",
     atmosphere: "Cool marble underfoot. Laurel smoke and old incense. Somewhere inside, a voice is chanting — not words exactly, but something older than words.",
     text: `The Temple of Apollo rises above you like a held breath.\n\nPilgrims fill the courtyard — dozens of them, maybe more, all waiting in a line that coils back on itself like a sleeping snake. Some have been here for days. You can tell by the way they sit: patient, tired, certain this matters enough to wait for.\n\nThen you notice something wrong.\n\nNear the front of the line, a man in rich clothing is pressing gold coins into a priest's hand. His rings flash in the sun. He speaks quietly, but his meaning is loud: he wants to skip everyone. He wants to be first.\n\nThe pilgrims see it. Their murmuring is the sound of people who are angry but afraid to say so.\n\nNo one speaks up.`,

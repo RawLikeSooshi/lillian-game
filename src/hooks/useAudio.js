@@ -1,22 +1,22 @@
 /**
  * React hook bridging the audio engine to components.
- * Manages ambience crossfades on chapter changes and exposes mute/volume controls.
+ * Manages ambience crossfades on chapter/mood changes and exposes mute/volume controls.
  */
 
 import { useState, useEffect, useCallback } from "react";
 import { isReady, isMuted, toggleMute as rawToggle, getVolume, setVolume as rawSetVolume } from "../engine/audio";
 import { startAmbience, stopAmbience } from "../engine/ambience";
 
-export default function useAudio(chapter) {
+export default function useAudio(chapter, mood) {
   const [muted, setMuted] = useState(isMuted());
   const [volume, setVolumeState] = useState(getVolume());
   const [ready, setReady] = useState(isReady());
 
-  // Start/crossfade ambience when chapter changes
+  // Start/crossfade ambience when chapter or mood changes
   useEffect(() => {
     if (!isReady()) return;
-    startAmbience(chapter);
-  }, [chapter, ready]);
+    startAmbience(chapter, mood);
+  }, [chapter, mood, ready]);
 
   // Poll ready state (AudioContext may start after first gesture)
   useEffect(() => {
@@ -36,9 +36,9 @@ export default function useAudio(chapter) {
     if (newMuted) {
       stopAmbience();
     } else if (isReady()) {
-      startAmbience(chapter);
+      startAmbience(chapter, mood);
     }
-  }, [chapter]);
+  }, [chapter, mood]);
 
   const setVolume = useCallback((v) => {
     rawSetVolume(v);

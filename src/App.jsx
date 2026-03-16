@@ -97,7 +97,8 @@ export default function App() {
   const [postPhase, setPostPhase] = useState(null); // phase to go to after power unlock
 
   // ── Audio ──
-  const audio = useAudio(chapter);
+  const sceneMood = currentStep?.scene?.mood || currentStep?.mood || null;
+  const audio = useAudio(chapter, sceneMood);
 
   // ── Derived State ──
   const powers = useMemo(() => getUnlockedPowers(stats), [stats]);

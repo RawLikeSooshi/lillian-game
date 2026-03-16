@@ -10,6 +10,7 @@ export const chapter8Scenes = {
     id: "ch8_palace",
     title: "The Palace of Minos",
     image: "\u{1F3DB}\uFE0F",
+    mood: "palace",
     transitionText: "The ship docks at Heraklion under a copper sky. Crete is older than mainland Greece — you can feel it in the stones, in the way people walk, in the silence between conversations. The palace of Knossos rises on a hill like a creature crouching.",
     atmosphere: "Painted columns. The smell of bull-hide and incense. Every hallway branches into two more. Even the palace above ground is a maze.",
     text: "King Minos holds court in a throne room decorated with leaping dolphins and double-headed axes. He is not what you expected — not a tyrant, not a fool. He is precise, intelligent, and deeply suspicious of travelers.\n\n'Another young Greek on a quest,' he says, not looking up from a wax tablet. 'The last three tried to steal from my treasury. The one before that wanted to kill my... pet.' He looks at you now. His eyes are sharp. 'What do you want in my kingdom?'\n\nThe court watches. Guards line the walls. A girl about your age sits on a low stool near the throne, spinning thread. She hasn't looked up once, but you feel certain she's listening to everything.",
@@ -49,6 +50,7 @@ export const chapter8Scenes = {
     id: "ch8_entrance",
     title: "The Thread and the Door",
     image: "\u{1F9F6}",
+    mood: "labyrinth",
     transitionText: "Night. The palace sleeps, but the girl with the thread is waiting for you in a corridor that smells of earth and old stone. Below your feet, something hums.",
     atmosphere: "Torchlight on painted walls. A door that leads down. The sound of breathing from somewhere deep below.",
     text: "Her name is Ariadne. She is the princess of Crete, daughter of Minos — and something about her is wrong. Not wrong as in broken. Wrong as in more than she should be.\n\n'I know why you're here,' she says. Her voice is calm, ancient, amused. 'You're here for what's below. Everyone who comes to Crete eventually goes below.'\n\nShe holds up a ball of crimson thread. 'This will lead you out. Tie it at the entrance, follow it back when you're done. Without it, the labyrinth keeps you. It was designed by Daedalus to be impossible to solve by memory alone.'\n\nShe tilts her head. 'You already have thread, don't you? I can feel it. Something from the beginning of your journey. It resonates.'",
@@ -95,6 +97,7 @@ export const chapter8Scenes = {
     id: "ch8_inside",
     title: "The Living Maze",
     image: "\u{1F300}",
+    mood: "labyrinth",
     transitionText: "Down. The stairs spiral into darkness. The walls are smooth stone, carved with images that seem to move in the torchlight. Behind you, the entrance shrinks to a point of light, then disappears.",
     atmosphere: "The walls breathe. Not metaphorically — they shift, expand, contract. The labyrinth is alive in some way you can't explain. Your footsteps echo wrong.",
     textVariants: {
@@ -138,6 +141,7 @@ export const chapter8Scenes = {
     id: "ch8_minotaur",
     title: "The Child of Poseidon",
     image: "\u{1F402}",
+    mood: "labyrinth",
     atmosphere: "The center of the labyrinth is not a prison cell. It's a garden — underground, lit by cracks in the ceiling where sunlight filters through. Flowers grow. A stream runs through stone channels. And in the middle, sitting with his back against a column, is Asterion.",
     textVariants: {
       learnedMinotaurTruth: "You know his name before you see his face. Asterion.\n\nHe is enormous — seven feet tall, shoulders like a bull, horns curving from a head that is neither human nor animal but somehow both. His eyes are brown and deeply, heartbreakingly intelligent.\n\nHe looks at you. Not with hunger. Not with rage. With recognition.\n\n'Another one,' he says. His voice is like grinding stone, but the words are gentle. 'You're smaller than the last ones. They came with swords.' He touches a scar on his arm. 'Are you here to kill me too?'\n\nBehind you, footsteps. Kira emerges from another corridor. She stops when she sees Asterion. Her hand goes to her weapon. Then she sees you. Then she sees his eyes.\n\n'Oh,' she says quietly. 'He's not what the stories say.'",
@@ -180,6 +184,7 @@ export const chapter8Scenes = {
     id: "ch8_exit",
     title: "The Way Out",
     image: "\u{1F31F}",
+    mood: "labyrinth",
     atmosphere: "The labyrinth shifts. Whatever you chose — the center has changed, and the maze knows it. The walls are opening. Or closing. It depends on what you did.",
     textVariants: {
       tookAriadnesThread: "The crimson thread glows in the shifting dark. You follow it — hand over hand, step by step — back through corridors that have rearranged themselves around your choice. The labyrinth is different now. Quieter. Whatever you did at the center changed something fundamental.\n\nAriadne is waiting at the entrance. She looks at your face and knows everything before you speak.\n\n'You saw him,' she says. Not a question.\n\n'Asterion,' you say. She closes her eyes. 'Yes. My brother. Was he...?' She can't finish the question. You answer it anyway.",

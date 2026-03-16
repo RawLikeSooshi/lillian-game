@@ -3,6 +3,7 @@ export const chapter3Scenes = {
     id: "ch3_arrival",
     title: "The City, Finally",
     image: "\u{1F3D9}\uFE0F",
+    mood: "city",
     atmosphere: "Salt wind and wood smoke. Cart wheels on stone. A city that never learned how to whisper.",
     inventoryBeat: {
       item: "woolenThread",
@@ -48,6 +49,7 @@ export const chapter3Scenes = {
     id: "ch3_mira1",
     title: "The Girl with the Package",
     image: "\u{1F50D}",
+    mood: "city",
     atmosphere: "Narrow streets after dark. Lamplight in windows. The city has pulled its voice down to a murmur.",
     text: "Niko, if you made an ally of him, is already two steps ahead — he knows which alleys connect, which doors are unlocked, which merchants keep late hours. If not, you navigate alone, and the city at night is a different animal than the city by day.\n\nYou find three people who saw Mira: a bread seller near the east gate who saw her heading into the merchant quarter with her chin up and her package held tight; a water carrier who saw her talking to two older boys outside a warehouse — \"not scared, but careful\"; and a scribe who says she saw Mira go into the warehouse and not come out.\n\nThe warehouse belongs to a merchant named Aldric. Niko, if he's with you, goes quiet when you say the name. Really quiet.\n\n\"He's not dangerous,\" Niko says carefully, choosing each word like stepping stones across a stream. \"But he's connected. To a lot of people. The kind of connected where you don't want to knock on the wrong door.\"",
     choices: [
@@ -87,6 +89,7 @@ export const chapter3Scenes = {
     id: "ch3_mira2",
     title: "The Thing You Didn't Predict",
     image: "\u{2709}\uFE0F",
+    mood: "inn",
     atmosphere: "Morning light through a dusty window. The smell of bread from downstairs — except no one's offering you any.",
     text: "Mira made it home. The package was delivered. Delia wept with relief and held her daughter so tight Mira squirmed.\n\nBut the package — it turns out — contained information about a trade arrangement that Aldric was managing for three merchant families. By delivering it to the craftsman on Poseidon Street — the correct recipient — Mira completed a transaction that cut Aldric out of a significant payment he was expecting.\n\nAldric is not dangerous. But he's unhappy. And in a city like Corinth, unhappy and connected is its own kind of danger.\n\nThis morning, you wake up to find that the inn won't serve you breakfast. The innkeeper is apologetic — he won't meet your eyes — but firm. Someone asked him not to. Someone with influence.\n\nYou did the right thing. The right thing has a bill attached.",
     choices: [
@@ -126,6 +129,7 @@ export const chapter3Scenes = {
     id: "ch3_castor1",
     title: "The Sabotage",
     image: "\u{1F3DF}\uFE0F",
+    mood: "arena",
     atmosphere: "Dusk at the athletics ground. Sand still warm from the day. Olive oil and sweat. The last runners casting long shadows.",
     text: "Castor is fifteen, serious, and trying hard not to look scared. He's not succeeding.\n\nThe games are tomorrow morning. His competition sandals — made to fit his exact foot, broken in over months of training — are gone. The ones left in their place are close but wrong: a quarter size too small, with a strap in a slightly different position. Enough to cause a blister in the first quarter mile. Enough, in a long race, to end it.\n\nHe has one lead: his main rival, a boy named Pelias, was seen near the equipment room yesterday evening.\n\nBut Castor says immediately — and you can tell it costs him something to say it: \"I don't want to accuse him if I'm wrong.\"\n\nThe trainer, who is less generous with his doubts, says flatly: \"It was Pelias. It had to be.\"",
     choices: [
@@ -164,6 +168,7 @@ export const chapter3Scenes = {
     id: "ch3_castor2",
     title: "The Part You Didn't Plan For",
     image: "\u{1F3C3}",
+    mood: "arena",
     atmosphere: "The training ground after the race. Sand kicked up, ribbons on the ground. The crowd is thinning. Someone is looking for you.",
     text: "Castor's race is over — however it ended, he ran it.\n\nBut something else has happened. While you were at the athletics ground, news arrived: the older athlete — the one who trained Castor, the one whose record Castor broke — has been formally accused by three other young athletes of the same thing he did to Castor. Your questions yesterday opened something. Other people started talking.\n\nThe older athlete, whose name is Theron, has been suspended from the athletics ground pending an inquiry. His family has lost significant standing in the city. His younger sister — who had nothing to do with any of this — has been excluded from her training group by the other children's parents.\n\nYou helped Castor. In doing so, you pulled a thread that unraveled something larger. Some of what came out was just. Some of it wasn't.\n\nYou didn't intend any of it.",
     choices: [
@@ -202,6 +207,7 @@ export const chapter3Scenes = {
     id: "ch3_convergence",
     title: "The Name You Made",
     image: "\u{1F305}",
+    mood: "city",
     atmosphere: "Late afternoon in Corinth's central square. Golden light on white stone. The fountain throwing coins of water into the air. A city that knows your name before you're ready for it to.",
     textVariants: {
       liedToLyconsAgent: "You're crossing the central square when you hear someone say your name.\n\nNot just your name — your name and your city and something about the Temple of Apollo and a nobleman called Lycon. Your name arrived in Corinth before you did. It's been here, working, making a shape you didn't choose.\n\nThe person who said it is a well-dressed woman sitting alone at a merchant's table, a cup of wine she hasn't touched beside her. She looks up at you with an expression you can't read — not hostile, not friendly. Something more precise than either.\n\n\"Sit down,\" she says. \"I'm not Lycon's enemy or his friend. I'm someone who watched what you did at the temple and has been waiting to see what kind of person you are.\"\n\nShe pauses. Her eyes haven't left yours.\n\n\"I have a decision to make. And I think your answer to one question will help me make it.\"\n\nShe already knows what you told Lycon's agent. You can see it in the way she holds her cup — carefully, like she's holding a verdict.\n\nHer question: \"If you had known in advance that speaking up at the temple would cost you what it has — the agents, the delays, the innkeeper, all of it — would you have done it anyway?\"",
