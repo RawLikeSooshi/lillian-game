@@ -7,16 +7,16 @@ import { useState, useEffect, useCallback } from "react";
 import { isReady, isMuted, toggleMute as rawToggle, getVolume, setVolume as rawSetVolume } from "../engine/audio";
 import { startAmbience, stopAmbience } from "../engine/ambience";
 
-export default function useAudio(chapter, mood) {
+export default function useAudio(chapter) {
   const [muted, setMuted] = useState(isMuted());
   const [volume, setVolumeState] = useState(getVolume());
   const [ready, setReady] = useState(isReady());
 
-  // Start/crossfade ambience when chapter or mood changes
+  // Start/crossfade music when chapter changes
   useEffect(() => {
     if (!isReady()) return;
-    startAmbience(chapter, mood);
-  }, [chapter, mood, ready]);
+    startAmbience(chapter);
+  }, [chapter, ready]);
 
   // Poll ready state (AudioContext may start after first gesture)
   useEffect(() => {
@@ -36,9 +36,9 @@ export default function useAudio(chapter, mood) {
     if (newMuted) {
       stopAmbience();
     } else if (isReady()) {
-      startAmbience(chapter, mood);
+      startAmbience(chapter);
     }
-  }, [chapter, mood]);
+  }, [chapter]);
 
   const setVolume = useCallback((v) => {
     rawSetVolume(v);

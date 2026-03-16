@@ -127,8 +127,7 @@ export default function App() {
   const identity = heroIdentity(stats);
 
   // ── Audio ──
-  const sceneMood = currentStep?.scene?.mood || currentStep?.mood || null;
-  const audio = useAudio(chapter, sceneMood);
+  const audio = useAudio(chapter);
 
   const resolvedScene = currentStep?.type === STEP_TYPES.SCENE
     ? resolveSceneText(currentStep.scene, flags, figure)
