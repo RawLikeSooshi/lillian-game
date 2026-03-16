@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { timerBar } from "../styles";
+import { playTimerTick, playTimerUrgent, playTimerExpire } from "../engine/sounds";
 
 /**
  * Depleting timer bar for timed combat choices.
@@ -17,11 +18,19 @@ export default function TimedChoiceBar({ duration = 10, active = true, onExpire,
     setRemaining(totalDuration);
     expiredRef.current = false;
 
+    let lastSecond = totalDuration;
     intervalRef.current = setInterval(() => {
       setRemaining((prev) => {
         const next = Math.max(0, prev - 0.1);
+        const sec = Math.ceil(next);
+        if (sec < lastSecond && next > 0) {
+          lastSecond = sec;
+          if (next <= 3) playTimerUrgent();
+          else playTimerTick();
+        }
         if (next <= 0 && !expiredRef.current) {
           expiredRef.current = true;
+          playTimerExpire();
           setTimeout(() => onExpire?.(), 0);
         }
         return next;

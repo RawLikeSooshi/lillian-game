@@ -1,9 +1,11 @@
+import { useEffect } from "react";
 import StatBar from "../components/StatBar";
 import InventoryBar from "../components/InventoryBar";
 import WorldTicker from "../components/WorldTicker";
 import OathBadge from "../components/OathBadge";
 import SceneAtmosphere from "../components/SceneAtmosphere";
 import { bg, transitionCard, goldBtn } from "../styles";
+import { playTransition } from "../engine/sounds";
 
 const CHAPTER_MOODS = {
   1: "road", 2: "road", 3: "road", 4: "sea", 5: "garden",
@@ -14,6 +16,7 @@ export default function TransitionScreen({
   heroName, transitionText, inventory, stats, chapter, onContinue,
   tickerMessages = [], oaths = [],
 }) {
+  useEffect(() => { playTransition(); }, []);
   const activeOaths = oaths.filter(o => !o.broken);
   const mood = CHAPTER_MOODS[chapter] || "default";
 

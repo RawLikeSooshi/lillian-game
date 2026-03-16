@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { bg, goldBtn } from "../styles";
 import { STAT_COLORS } from "../engine/stats";
+import { playPowerUnlock } from "../engine/sounds";
 
 /**
  * Power Unlock Screen — Celebration when a stat crosses a power threshold.
@@ -11,6 +12,7 @@ export default function PowerUnlockScreen({ power, onContinue }) {
   const [showOracle, setShowOracle] = useState(false);
 
   useEffect(() => {
+    playPowerUnlock();
     const t1 = setTimeout(() => setFadeIn(true), 200);
     const t2 = setTimeout(() => setShowOracle(true), 1500);
     return () => { clearTimeout(t1); clearTimeout(t2); };

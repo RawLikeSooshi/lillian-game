@@ -1,10 +1,13 @@
+import { useEffect } from "react";
 import StatBar from "../components/StatBar";
 import InventoryBar from "../components/InventoryBar";
 import { STAT_ICONS } from "../engine/stats";
 import { bg, puzzleCard, goldBtn } from "../styles";
+import { playPuzzleSolve, playPuzzleFail } from "../engine/sounds";
 
 export default function PuzzleResultScreen({ puzzle, puzzleState, stats, inventory, onContinue }) {
   const solved = puzzleState.solved;
+  useEffect(() => { solved ? playPuzzleSolve() : playPuzzleFail(); }, []);
   const forced = puzzleState.forced;
   const statChanges = solved ? (puzzle.onSolve || {}) : (puzzle.onSkip || {});
   const message = solved

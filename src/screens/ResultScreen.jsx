@@ -1,10 +1,19 @@
+import { useEffect } from "react";
 import StatBar from "../components/StatBar";
 import OracleInsight from "../components/OracleInsight";
 import InventoryBar from "../components/InventoryBar";
 import { STAT_ICONS } from "../engine/stats";
 import { bg, card, goldBtn } from "../styles";
+import { playStatChange, playItemGain } from "../engine/sounds";
 
 export default function ResultScreen({ heroName, scene, stats, inventory, lastChanges, choice, showLesson, onNext, isLastScene, chapter, inventoryGained }) {
+  useEffect(() => {
+    const hasPositive = Object.values(lastChanges || {}).some(v => v > 0);
+    const hasNegative = Object.values(lastChanges || {}).some(v => v < 0);
+    if (hasPositive) playStatChange(true);
+    else if (hasNegative) playStatChange(false);
+    if (inventoryGained && inventoryGained.length > 0) setTimeout(() => playItemGain(), 300);
+  }, []);
   return (
     <div style={bg}>
       <div className="fade-in" style={{ ...card, marginBottom: 10, padding: "11px 16px" }}>

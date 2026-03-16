@@ -7,6 +7,7 @@ import PowerIcon from "../components/PowerIcon";
 import { resolveCombatRound, resolveRawRoll, OUTCOME_LABELS } from "../engine/dice";
 import { getPowerBonus, getTimerExtension, checkPowerAvailability } from "../engine/powers";
 import { getOathBuffs, checkOathConstraints } from "../engine/oaths";
+import { playHit, playMiss, playCrit, playClick } from "../engine/sounds";
 
 /**
  * Encounter Screen — Timed choice combat.
@@ -51,7 +52,13 @@ export default function EncounterScreen({
 
   const handleRollComplete = useCallback(() => {
     setPhase("result");
-  }, []);
+    if (currentRoll) {
+      if (currentRoll.outcome === "crit") playCrit();
+      else if (currentRoll.outcome === "success") playHit();
+      else if (currentRoll.outcome === "partial") playHit();
+      else playMiss();
+    }
+  }, [currentRoll]);
 
   const handleNextRound = useCallback(() => {
     const newResults = [...roundResults, currentRoll];
@@ -146,7 +153,7 @@ export default function EncounterScreen({
           </div>
           <div style={{ textAlign: "center" }}>
             <button
-              onClick={() => { setPhase("choose"); setTimerKey(k => k + 1); }}
+              onClick={() => { playClick(); setPhase("choose"); setTimerKey(k => k + 1); }}
               style={{
                 ...goldBtn,
                 fontSize: 17,

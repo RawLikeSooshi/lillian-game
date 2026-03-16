@@ -51,6 +51,8 @@ import PrologueScreen from "./screens/PrologueScreen";
 import ChapterTitleScreen from "./screens/ChapterTitleScreen";
 import prologue from "./data/prologue";
 import { CHAPTER_THEMES } from "./styles";
+import useAudio from "./hooks/useAudio";
+import { initAudio } from "./engine/audio";
 
 const SAVE_KEY = "hero-of-olympus-save";
 const SAVE_VERSION = 2;
@@ -93,6 +95,9 @@ export default function App() {
   const [pendingPowerUnlock, setPendingPowerUnlock] = useState(null);
   const [usedPowers, setUsedPowers] = useState({});
   const [postPhase, setPostPhase] = useState(null); // phase to go to after power unlock
+
+  // ── Audio ──
+  const audio = useAudio(chapter);
 
   // ── Derived State ──
   const powers = useMemo(() => getUnlockedPowers(stats), [stats]);
@@ -654,6 +659,32 @@ export default function App() {
     return getTickerMessages(pool, flags, worldState);
   }, [currentStep, flags, worldState]);
 
+  // ── Floating mute button (imperative DOM to work with early returns) ──
+  useEffect(() => {
+    if (phase === "welcome") return;
+    let btn = document.getElementById("hoo-mute-btn");
+    if (!btn) {
+      btn = document.createElement("button");
+      btn.id = "hoo-mute-btn";
+      Object.assign(btn.style, {
+        position: "fixed", bottom: "16px", right: "16px", zIndex: "9999",
+        width: "40px", height: "40px", borderRadius: "50%",
+        background: "rgba(26,16,8,0.85)", border: "1px solid rgba(160,128,96,0.3)",
+        fontSize: "18px", cursor: "pointer",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        transition: "all 0.2s",
+      });
+      document.body.appendChild(btn);
+    }
+    btn.textContent = audio.muted ? "\uD83D\uDD07" : "\uD83D\uDD0A";
+    btn.style.color = audio.muted ? "#706050" : "#d4a017";
+    btn.onclick = audio.toggleMute;
+    return () => {
+      const el = document.getElementById("hoo-mute-btn");
+      if (el) el.remove();
+    };
+  }, [phase, audio.muted, audio.toggleMute]);
+
   // ────────────────────────────────────────────
   //  PHASE ROUTING
   // ────────────────────────────────────────────
@@ -666,9 +697,9 @@ export default function App() {
     } catch (_) {}
     return (
       <WelcomeScreen
-        onBegin={() => setPhase("name")}
+        onBegin={() => { initAudio(); setPhase("name"); }}
         savedGame={savedGame}
-        onContinue={() => savedGame && loadSave(savedGame)}
+        onContinue={() => { initAudio(); savedGame && loadSave(savedGame); }}
         onExportSave={handleExportSave}
         onImportSave={handleImportSave}
       />

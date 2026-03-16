@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { bg, card, goldBtn } from "../styles";
 import OracleInsight from "../components/OracleInsight";
 import { OATH_CATALOG } from "../engine/oaths";
+import { playOathSwear } from "../engine/sounds";
 
 /**
  * Oath Swearing Screen — Presented when an oath opportunity arises.
@@ -17,6 +18,7 @@ export default function OathSwearScreen({
   if (!oath) return null;
 
   const handleSwear = () => {
+    playOathSwear();
     setDecided("sworn");
     setShowOracle(true);
   };

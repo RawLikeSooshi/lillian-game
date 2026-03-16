@@ -1,3 +1,5 @@
+import { playChoiceSelect } from "../engine/sounds";
+
 export default function ChoiceButton({ index, choice, onClick, flags, inventory }) {
   // Hide if requires a flag that isn't set
   if (choice.requiresFlag && (!flags || !flags[choice.requiresFlag])) return null;
@@ -8,7 +10,7 @@ export default function ChoiceButton({ index, choice, onClick, flags, inventory 
 
   return (
     <button
-      onClick={() => onClick(choice)}
+      onClick={() => { playChoiceSelect(); onClick(choice); }}
       style={{
         background: "rgba(255,248,220,0.05)",
         border: isItemUnlocked ? "1px solid rgba(var(--ch-accent-rgb),0.35)" : "1px solid rgba(var(--ch-accent-rgb),0.19)",

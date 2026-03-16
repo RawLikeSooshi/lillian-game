@@ -2,6 +2,7 @@ import React from "react";
 import { bg, sacrificeCard, goldBtn } from "../styles";
 import SacrificeConfirm from "../components/SacrificeConfirm";
 import { describeSacrifice, canSacrifice } from "../engine/sacrifice";
+import { playSacrifice } from "../engine/sounds";
 
 /**
  * Sacrifice Screen — Irreversible trade.
@@ -51,7 +52,7 @@ export default function SacrificeScreen({
               ...description,
               gain: sacrificeData.gainText,
             }}
-            onConfirm={() => onSacrificeConfirm?.(sacrificeData)}
+            onConfirm={() => { playSacrifice(); onSacrificeConfirm?.(sacrificeData); }}
             onCancel={onSacrificeDecline}
           />
         ) : (

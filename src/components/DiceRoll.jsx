@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { OUTCOME_COLORS } from "../engine/dice";
+import { playDiceRollStart, playDiceLand } from "../engine/sounds";
 
 /**
  * Animated D20 roll display.
@@ -14,6 +15,7 @@ export default function DiceRoll({ roll, modifier, dc, stat, onComplete }) {
     if (!roll) return;
 
     // Spin through random numbers for 1.2 seconds
+    playDiceRollStart();
     const spinInterval = setInterval(() => {
       setDisplayNumber(Math.floor(Math.random() * 20) + 1);
     }, 60);
@@ -22,6 +24,7 @@ export default function DiceRoll({ roll, modifier, dc, stat, onComplete }) {
       clearInterval(spinInterval);
       setDisplayNumber(roll.raw);
       setPhase("landed");
+      playDiceLand(roll.raw);
     }, 1200);
 
     const doneTimer = setTimeout(() => {

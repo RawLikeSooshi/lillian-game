@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { prophecyCard } from "../styles";
+import { playCardFlip } from "../engine/sounds";
 
 /**
  * Single prophecy card display.
@@ -11,8 +12,10 @@ export default function ProphecyCard({ text, revealText, revealed = false, delay
 
   useEffect(() => {
     if (delay > 0) {
-      const timer = setTimeout(() => setVisible(true), delay);
+      const timer = setTimeout(() => { setVisible(true); playCardFlip(); }, delay);
       return () => clearTimeout(timer);
+    } else {
+      playCardFlip();
     }
   }, [delay]);
 
